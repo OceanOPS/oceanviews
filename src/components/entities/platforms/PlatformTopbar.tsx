@@ -6,6 +6,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { PlatformFilters } from './platformFilters';
 import AutocompleteField from '../../../toolshed/fields/AutocompleteField';
 import CountryField from '../../../toolshed/fields/CountryField';
+import NetworkField from '../../../toolshed/fields/NetworkField';
 
 type FilterOption = {
   label: string;
@@ -133,24 +134,35 @@ const TopBar: React.FC = () => {
                     />
                   );
                 case 'multiSelect':
-                  return (
+                  const validSortBy = filter.sortBy === 'rank' || filter.sortBy === 'label' ? filter.sortBy : undefined;
+                    return (
                     <AutocompleteField
                       key={filter.key}
                       label={filter.label}
                       url={filter.url}
                       value={filters[filter.key] || []}
                       onChange={(newValue) => handleFilterChange(filter.key, newValue)}
+                      sortBy={validSortBy || 'label'}
                     />
                   );
-				case 'countrySelect':
-					return (
-					  <CountryField
-						label="Country"
-						url={filter.url}
-						value={filters[filter.key] || []}
-						onChange={(newValue) => handleFilterChange(filter.key, newValue)}
-					  />
-					);
+                case 'countrySelect':
+                  return (
+                    <CountryField
+                    label="Country"
+                    url={filter.url}
+                    value={filters[filter.key] || []}
+                    onChange={(newValue) => handleFilterChange(filter.key, newValue)}
+                    />
+                  );
+                case 'networkSelect':
+                    return (
+                    <NetworkField
+                    label="Network"
+                    url={filter.url}
+                    value={filters[filter.key] || []}
+                    onChange={(newValue) => handleFilterChange(filter.key, newValue)}
+                    />
+                  );
                 default:
                   return null;
               }
