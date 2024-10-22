@@ -67,7 +67,7 @@ const Home: React.FC = () => {
       setMessages(prevMessages => [
         ...prevMessages,
         { content: currentMessage, side: 'right' }, // User's message on the right
-        { content: "Our apologies, the GPT functionality is not available quite yet. Stay tuned!", side: 'left' }, // OceanViews' response
+        { content: "Our apologies, the AI chat functionality is not available quite yet. Stay tuned!", side: 'left' }, // OceanViews' response
       ]);
       setCurrentMessage(''); // Clear input field
     }
@@ -122,7 +122,7 @@ const Home: React.FC = () => {
               Import
             </Typography>
             <Typography variant="body1">
-              Submit metadata into the OceanAPI by user forms and file upload.
+              Submit metadata into the OceanAPI through user forms and file uploads.
             </Typography>
           </PanelBox>
         </Grid>
@@ -163,7 +163,7 @@ const Home: React.FC = () => {
       <Box sx={{ marginTop: 2, width: '100%', maxWidth: '600px' }}>
         <CustomTextField
           variant="outlined"
-          placeholder="Message our GPT here"
+          placeholder="Message our AI here"
           fullWidth
           inputRef={inputRef} // Reference for auto-focus
           value={currentMessage} // Bind input value

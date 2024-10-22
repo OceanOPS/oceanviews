@@ -181,12 +181,12 @@ const renderListItems = (category: string, options: SidebarOption[]) => (
         sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
       >
         {renderListItems('', [
-          'Home'
+          'Home',
+          'Interactive Map'
         ])}
 
         {/* Dashboards section */}
         {renderListItems('DASHBOARDS', [
-          'Interactive Map',
           'Summary',
           'Implementation',
           'Instrumentation',

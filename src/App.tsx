@@ -1,4 +1,3 @@
-// App.tsx
 import { useState } from 'react';
 import { CssBaseline, Box, createTheme, ThemeProvider } from '@mui/material';
 import Sidebar, { SidebarOption } from './components/Sidebar';
@@ -19,6 +18,7 @@ import Home from './components/Home';
 
 function App() {
   const [darkMode, setDarkMode] = useState(false);
+  const [selectedOption, setSelectedOption] = useState<SidebarOption>('Home'); // Default selection
 
   const theme = createTheme({
     palette: {
@@ -28,44 +28,6 @@ function App() {
 
   const toggleDarkMode = () => {
     setDarkMode(!darkMode);
-  };
-
-  const [selectedOption, setSelectedOption] = useState<SidebarOption>('Home'); // Default selection
-
-  
-  const renderMainContent = () => {
-    switch (selectedOption) {
-      case 'Home':
-        return <Home />;
-      case 'Platforms':
-        return <Platforms />;
-      case 'Cruises':
-        return <Cruises />;
-      case 'Ships':
-        return <Ships />;
-      case 'Lines':
-        return <Lines />;
-      case 'Contacts':
-        return <Contacts />;
-      case 'Interactive Map':
-        return <InteractiveMap />;
-      case 'Summary':
-        return <Summary />;
-      case 'Implementation':
-        return <Implementation />;
-      case 'Instrumentation':
-        return <Instrumentation />;
-      case 'Cruise Planning':
-        return <CruisePlanning />;
-      case 'Create Dashboard':
-        return <CreateDashboard />;
-      case 'Create Report':
-        return <CreateReport />;
-      case 'Monthly Analysis':
-        return <MonthlyAnalysis />;
-      default:
-        return <Home />;
-    }
   };
 
   return (
@@ -88,11 +50,27 @@ function App() {
             p: 0, 
             display: 'flex', 
             flexDirection: 'column',
-            width: 'calc(100% - [sidebar-width])', 
+            width: 'calc(100% - [sidebar-width])'
           }}
         >
           <Box sx={{ width: '100%', flexGrow: 1 }}> 
-            {renderMainContent()}
+            {selectedOption === 'Platforms' && <Platforms />}
+            {selectedOption === 'Cruises' && <Cruises />}
+            {selectedOption === 'Ships' && <Ships />}
+            {selectedOption === 'Lines' && <Lines />}
+            {selectedOption === 'Contacts' && <Contacts />}
+            {/* Keep InteractiveMap loaded, just hide it when not active */}
+            <Box sx={{ display: selectedOption === 'Interactive Map' ? 'block' : 'none' }}>
+              <InteractiveMap />
+            </Box>
+            {selectedOption === 'Summary' && <Summary />}
+            {selectedOption === 'Implementation' && <Implementation />}
+            {selectedOption === 'Instrumentation' && <Instrumentation />}
+            {selectedOption === 'Cruise Planning' && <CruisePlanning />}
+            {selectedOption === 'Create Dashboard' && <CreateDashboard />}
+            {selectedOption === 'Create Report' && <CreateReport />}
+            {selectedOption === 'Monthly Analysis' && <MonthlyAnalysis />}
+            {selectedOption === 'Home' && <Home />}
           </Box>
         </Box>
       </Box>
