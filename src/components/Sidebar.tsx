@@ -14,8 +14,10 @@ import ContactMailIcon from '@mui/icons-material/ContactMail';
 import LoginIcon from '@mui/icons-material/Login';
 import AddIcon from '@mui/icons-material/Add';
 import AutoGraphIcon from '@mui/icons-material/AutoGraph';
+import HomeIcon from '@mui/icons-material/Home';
 
 export type SidebarOption = 
+  | 'Home'
   | 'Interactive Map'
   | 'Summary'
   | 'Implementation'
@@ -33,6 +35,7 @@ export type SidebarOption =
 
 // Define your icons in a mapping for easy access
 const iconMapping = {
+  "Home": <HomeIcon />,
   "Interactive Map": <MapIcon />,
   "Summary": <AssessmentIcon />,
   "Implementation": <BuildIcon />,
@@ -77,7 +80,7 @@ const Sidebar: React.FC<SidebarProps> = ({ darkMode, toggleDarkMode, selectedOpt
 // Map over the iconMapping and render ListItems dynamically
 const renderListItems = (category: string, options: SidebarOption[]) => (
     <>
-      <Typography
+      {category != '' ? <Typography
         variant="subtitle2"
         sx={{
           fontSize: '0.8rem',
@@ -90,7 +93,8 @@ const renderListItems = (category: string, options: SidebarOption[]) => (
         }}
       >
         {open ? category : '  '}
-      </Typography>
+      </Typography> : <></>}
+
       <List sx={{ padding: 0 }}>
         {options.map(option => (
           <ListItem
@@ -176,8 +180,12 @@ const renderListItems = (category: string, options: SidebarOption[]) => (
         onMouseLeave={handleMouseLeave}
         sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
       >
+        {renderListItems('', [
+          'Home'
+        ])}
+
         {/* Dashboards section */}
-        {renderListItems('Dashboards', [
+        {renderListItems('DASHBOARDS', [
           'Interactive Map',
           'Summary',
           'Implementation',
@@ -187,7 +195,7 @@ const renderListItems = (category: string, options: SidebarOption[]) => (
         ])}
 
         {/* Tables section */}
-        {renderListItems('GOOS Entities', [
+        {renderListItems('GOOS ENTITIES', [
           'Platforms',
           'Cruises',
           'Ships',
@@ -196,7 +204,7 @@ const renderListItems = (category: string, options: SidebarOption[]) => (
         ])}
 
 		{/* Reports section */}
-        {renderListItems('Reports', [
+        {renderListItems('REPORTS', [
           'Monthly Analysis',
           'Create Report'
         ])}

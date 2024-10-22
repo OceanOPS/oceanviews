@@ -15,6 +15,7 @@ import CruisePlanning from './components/dashboards/CruisePlanning';
 import CreateDashboard from './components/dashboards/CreateDashboard';
 import CreateReport from './components/reports/CreateReport';
 import MonthlyAnalysis from './components/reports/MonthlyAnalysis';
+import Home from './components/Home';
 
 function App() {
   const [darkMode, setDarkMode] = useState(false);
@@ -29,11 +30,13 @@ function App() {
     setDarkMode(!darkMode);
   };
 
-  const [selectedOption, setSelectedOption] = useState<SidebarOption>('Platforms'); // Default selection
+  const [selectedOption, setSelectedOption] = useState<SidebarOption>('Home'); // Default selection
 
   
   const renderMainContent = () => {
     switch (selectedOption) {
+      case 'Home':
+        return <Home />;
       case 'Platforms':
         return <Platforms />;
       case 'Cruises':
@@ -61,7 +64,7 @@ function App() {
       case 'Monthly Analysis':
         return <MonthlyAnalysis />;
       default:
-        return <Platforms />;
+        return <Home />;
     }
   };
 
