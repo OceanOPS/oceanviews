@@ -12,8 +12,8 @@ interface FilterDialogProps {
   onClose: () => void;
   filtersVisibility: { [key: string]: boolean };
   toggleFilterVisibility: (key: string) => void;
-  filters: FilterOption[]; // Generic filter list (e.g., PlatformFilters)
-  categories: string[];    // Categories for the selected entity
+  filters: FilterOption[]; 
+  categories: string[]; 
 }
 
 const FilterDialog: React.FC<FilterDialogProps> = ({

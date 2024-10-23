@@ -2,11 +2,11 @@ import { useState } from 'react';
 import { CssBaseline, Box, createTheme, ThemeProvider } from '@mui/material';
 import Sidebar from './components/sidebar/Sidebar';
 import { SidebarOption } from './types/types';
-import Platforms from './components/entities/platforms/Platforms'; 
-import Cruises from './components/entities/CruiseTable';
-import Ships from './components/entities/ShipTable';
-import Lines from './components/entities/LineTable';
-import Contacts from './components/entities/ContactTable';
+import Platforms from './components/catalogue/platforms/Platforms'; 
+import Cruises from './components/catalogue/cruises/CruiseTable';
+import Ships from './components/catalogue/ships/ShipTable';
+import Lines from './components/catalogue/lines/LineTable';
+import Contacts from './components/catalogue/contacts/ContactTable';
 import InteractiveMap from './components/dashboards/InteractiveMap';
 import Summary from './components/dashboards/Summary';
 import Implementation from './components/dashboards/Implementation';
@@ -58,7 +58,7 @@ function App() {
             {selectedOption === 'Lines' && <Lines />}
             {selectedOption === 'Contacts' && <Contacts />}
             {/* Keep InteractiveMap loaded, just hide it when not active */}
-            <Box sx={{ display: selectedOption === 'Interactive Map' ? 'block' : 'none' }}>
+            <Box sx={{ display: selectedOption === 'Map' ? 'block' : 'none' }}>
               <InteractiveMap />
             </Box>
             {selectedOption === 'Summary' && <Summary />}

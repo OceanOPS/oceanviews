@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Box } from '@mui/material';
-import PlatformTopbar from '../entities/platforms/PlatformTopbar';
+import PlatformTopbar from '../catalogue/platforms/PlatformTopbar';
 
 const InteractiveMap: React.FC = () => {
   const [topBarHeight, setTopBarHeight] = useState<number>(72); 

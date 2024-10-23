@@ -4,6 +4,7 @@ import SidebarHeader from './SidebarHeader';
 import SidebarList from './SidebarList'; 
 import DarkModeToggle from './DarkModeToggle';
 import { SidebarOption } from '../../types/types'; 
+
 interface SidebarProps {
   darkMode: boolean;
   toggleDarkMode: () => void;
@@ -34,14 +35,18 @@ const Sidebar: React.FC<SidebarProps> = ({ darkMode, toggleDarkMode, selectedOpt
       <SidebarHeader open={open} setOpen={setOpen} darkMode={darkMode} />
 
       <Box onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+        
+        {/* Home, Interactive Map, and Log In options */}
         <SidebarList
           category=""
-          options={['Home', 'Interactive Map']}
+          options={['Home', 'Log In', 'Map']}
           selectedOption={selectedOption}
           setSelectedOption={setSelectedOption}
           darkMode={darkMode}
           open={open}
         />
+
+        {/* Other sections */}
         <SidebarList
           category="DASHBOARDS"
           options={['Summary', 'Implementation', 'Instrumentation', 'Cruise Planning', 'Create Dashboard']}
@@ -51,7 +56,7 @@ const Sidebar: React.FC<SidebarProps> = ({ darkMode, toggleDarkMode, selectedOpt
           open={open}
         />
         <SidebarList
-          category="GOOS ENTITIES"
+          category="CATALOGUE"
           options={['Platforms', 'Cruises', 'Ships', 'Lines', 'Contacts']}
           selectedOption={selectedOption}
           setSelectedOption={setSelectedOption}
@@ -67,7 +72,10 @@ const Sidebar: React.FC<SidebarProps> = ({ darkMode, toggleDarkMode, selectedOpt
           open={open}
         />
 
-        <DarkModeToggle darkMode={darkMode} toggleDarkMode={toggleDarkMode} open={open} />
+        {/* Push Dark Mode Toggle to the bottom */}
+        <Box sx={{ marginTop: 'auto' }}>
+          <DarkModeToggle darkMode={darkMode} toggleDarkMode={toggleDarkMode} open={open} />
+        </Box>
       </Box>
     </Drawer>
   );

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Box, Typography } from '@mui/material';
 import { Responsive, WidthProvider } from 'react-grid-layout';
-import PlatformTopbar from '../entities/platforms/PlatformTopbar'; 
+import PlatformTopbar from '../catalogue/platforms/PlatformTopbar'; 
 import SummaryPieChart from '../widgets/SummaryPieChart'; 
 import SummaryTable from '../widgets/SummaryTable'; 
 import { useTheme } from '@mui/material';
