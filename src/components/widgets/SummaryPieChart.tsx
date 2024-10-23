@@ -95,11 +95,11 @@ const SummaryPieChart: React.FC = () => {
 
       const chartInstance = window.AmCharts.makeChart('chartdiv', chartConfig);
 
-      setChart(chartInstance); // Store the chart instance
+      setChart(chartInstance);
 
       return () => {
         if (chartInstance) {
-          chartInstance.clear(); // Clean up on unmount
+          chartInstance.clear(); 
         }
       };
     }

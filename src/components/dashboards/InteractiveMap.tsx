@@ -3,15 +3,14 @@ import { Box } from '@mui/material';
 import PlatformTopbar from '../entities/platforms/PlatformTopbar';
 
 const InteractiveMap: React.FC = () => {
-  const [topBarHeight, setTopBarHeight] = useState<number>(72); // Default top bar height
-  const topBarRef = useRef<HTMLDivElement | null>(null); // Ref to track the TopBar height
-  const iframeRef = useRef<HTMLIFrameElement | null>(null); // Keep iframe reference
+  const [topBarHeight, setTopBarHeight] = useState<number>(72); 
+  const topBarRef = useRef<HTMLDivElement | null>(null); 
+  const iframeRef = useRef<HTMLIFrameElement | null>(null); 
 
-  // Resize the top bar dynamically
   useEffect(() => {
     const handleResize = () => {
       if (topBarRef.current) {
-        setTopBarHeight(topBarRef.current.offsetHeight); // Set TopBar height dynamically
+        setTopBarHeight(topBarRef.current.offsetHeight); 
       }
     };
 
@@ -23,17 +22,16 @@ const InteractiveMap: React.FC = () => {
 
   return (
     <Box sx={{ width: '100%', height: '100vh', padding: '0px', display: 'flex', flexDirection: 'column' }}>
-      {/* TopBar with ref to calculate its height */}
+     
       <Box ref={topBarRef}>
         <PlatformTopbar />
       </Box>
 
-      {/* Iframe for the map, keeps state in memory */}
       <Box
         sx={{
           flexGrow: 1,
-          overflow: 'hidden', // Ensure iframe doesn't overflow
-          height: `calc(100vh - ${topBarHeight}px)`, // Dynamic height adjustment
+          overflow: 'hidden',
+          height: `calc(100vh - ${topBarHeight}px)`, 
         }}
       >
         <iframe

@@ -15,13 +15,13 @@ const SummaryTable: React.FC = () => {
     <TableContainer 
       component={Paper} 
       sx={{
-        boxShadow: 'none', // Remove shadow
-        border: 'none',    // Remove border from the TableContainer
+        boxShadow: 'none',
+        border: 'none',
       }}
     >
       <Table 
         sx={{ 
-          border: 'none', // Remove border from the Table
+          border: 'none',
         }}
       >
         <TableBody>

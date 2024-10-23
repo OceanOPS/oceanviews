@@ -129,7 +129,6 @@ const PlatformTable: React.FC = () => {
 	backgroundColor: theme.palette.mode === 'light' ? '#f5f5f5' : '#1c1c1e', }}>
       <Paper sx={{ display: 'flex', flexDirection: 'column', height: '100%', width: '100%' }}>
 
-        {/* Toolbar with pagination and custom buttons */}
         <Toolbar sx={{ justifyContent: 'space-between' }}>
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
             <TablePagination
@@ -143,7 +142,6 @@ const PlatformTable: React.FC = () => {
             />
           </Box>
 
-          {/* Custom buttons */}
           <Box>
             <Button
               variant="contained"
@@ -186,7 +184,6 @@ const PlatformTable: React.FC = () => {
                     onChange={handleSelectAllClick}
                   />
                 </TableCell>
-                {/* Render the columns dynamically based on the selected ones */}
                 {allColumns
                   .filter((col) => displayedColumns.includes(col.key))
                   .map((col) => (
@@ -240,7 +237,6 @@ const PlatformTable: React.FC = () => {
         </TableContainer>
       </Paper>
 
-      {/* Select Columns Dialog */}
       <Dialog open={columnDialogOpen} onClose={handleColumnDialogClose}>
         <DialogTitle>Select Columns</DialogTitle>
         <DialogContent>

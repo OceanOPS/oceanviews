@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { CssBaseline, Box, createTheme, ThemeProvider } from '@mui/material';
-import Sidebar, { SidebarOption } from './components/Sidebar';
+import Sidebar from './components/sidebar/Sidebar';
+import { SidebarOption } from './types/types';
 import Platforms from './components/entities/platforms/Platforms'; 
 import Cruises from './components/entities/CruiseTable';
 import Ships from './components/entities/ShipTable';
@@ -18,7 +19,7 @@ import Home from './components/Home';
 
 function App() {
   const [darkMode, setDarkMode] = useState(false);
-  const [selectedOption, setSelectedOption] = useState<SidebarOption>('Home'); // Default selection
+  const [selectedOption, setSelectedOption] = useState<SidebarOption>('Home');
 
   const theme = createTheme({
     palette: {
@@ -34,15 +35,12 @@ function App() {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Box sx={{ display: 'flex', height: '100vh', width: '100vw' }}>
-        {/* Sidebar Component */}
         <Sidebar 
           darkMode={darkMode} 
           toggleDarkMode={toggleDarkMode} 
           selectedOption={selectedOption}
           setSelectedOption={setSelectedOption}
         />
-
-        {/* Main Content Area */}
         <Box 
           component="main" 
           sx={{ 

@@ -1,3 +1,5 @@
+export const PlatformCategories = ['General', 'Deployment', 'Ship', 'Identifiers', 'Hardware', 'Sensors'];
+
 export const PlatformFilters = [
 	{
 	  key: 'reference',

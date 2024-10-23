@@ -1,5 +1,4 @@
-// src/theme.ts
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { createTheme } from '@mui/material/styles';
 
 export const lightTheme = createTheme({
   palette: {
@@ -11,19 +10,19 @@ export const lightTheme = createTheme({
 	typography: {
 		fontFamily: 'Montserrat, sans-serif',
 		h1: {
-			fontWeight: 600, // Semibold for h1
+			fontWeight: 600, 
 		},
 		h2: {
-			fontWeight: 600, // Semibold for h2
+			fontWeight: 600, 
 		},
 		h3: {
-			fontWeight: 600, // Semibold for h3
+			fontWeight: 600, 
 		},
 		body1: {
-			fontWeight: 400, // Regular for body text
+			fontWeight: 400, 
 		},
 		body2: {
-			fontWeight: 300, // Light for smaller text
+			fontWeight: 300, 
 		},
 	},
 });
@@ -39,19 +38,19 @@ export const darkTheme = createTheme({
   typography: {
 		fontFamily: 'Montserrat, sans-serif',
 		h1: {
-			fontWeight: 600, // Semibold for h1
+			fontWeight: 600, 
 		},
 		h2: {
-			fontWeight: 600, // Semibold for h2
+			fontWeight: 600,
 		},
 		h3: {
-			fontWeight: 600, // Semibold for h3
+			fontWeight: 600,
 		},
 		body1: {
-			fontWeight: 400, // Regular for body text
+			fontWeight: 400, 
 		},
 		body2: {
-			fontWeight: 300, // Light for smaller text
+			fontWeight: 300,
 		},
 	},
 });

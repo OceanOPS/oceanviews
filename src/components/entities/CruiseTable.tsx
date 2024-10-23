@@ -1,4 +1,3 @@
-// src/components/PlatformTable.tsx
 import { Typography, Box } from '@mui/material';
 
 const CruiseTable: React.FC = () => {

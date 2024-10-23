@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { Autocomplete, TextField } from '@mui/material';
 import { styled } from '@mui/system';
 
-// Styled component for indented child networks
 const OptionBox = styled('div')(({ rank }: { rank: number }) => ({
   paddingLeft: rank > 0 ? `${rank * 10}px` : '0px',
   fontWeight: rank === 0 ? 'bold' : 'normal',
@@ -38,11 +37,11 @@ const NetworkField: React.FC<NetworkFieldProps> = ({ label, url, value, onChange
         }));
         
         const sortNetworks = (a: NetworkOption, b: NetworkOption) => {
-            const aMasterprog = a.masterprog ?? '';  // Fallback to empty string if undefined
+            const aMasterprog = a.masterprog ?? '';  
             const bMasterprog = b.masterprog ?? '';
-            const aRank = a.rank ?? 0;  // Fallback to 0 if undefined
+            const aRank = a.rank ?? 0; 
             const bRank = b.rank ?? 0;
-            const aName = a.label ?? '';  // Fallback to empty string if undefined
+            const aName = a.label ?? ''; 
             const bName = b.label ?? '';
         
             if (aName === "OceanOPS") return -1;
