@@ -1,5 +1,6 @@
-import { useState } from 'react';
-import { Drawer, Box } from '@mui/material';
+import { useState, forwardRef } from 'react';
+import { Drawer, Box, TextField, InputAdornment, IconButton, ListItemIcon, ListItem } from '@mui/material';
+import SearchIcon from '@mui/icons-material/Search';
 import SidebarHeader from './SidebarHeader'; 
 import SidebarList from './SidebarList'; 
 import DarkModeToggle from './DarkModeToggle';
@@ -12,8 +13,9 @@ interface SidebarProps {
   setSelectedOption: (option: SidebarOption) => void;
 }
 
-const Sidebar: React.FC<SidebarProps> = ({ darkMode, toggleDarkMode, selectedOption, setSelectedOption }) => {
-  const [open, setOpen] = useState(true);
+const Sidebar = forwardRef(({ darkMode, toggleDarkMode, selectedOption, setSelectedOption }: SidebarProps, ref) => {
+	const [open, setOpen] = useState(true);
+
 
   const handleMouseEnter = () => setOpen(true);
   const handleMouseLeave = () => {};
@@ -36,6 +38,54 @@ const Sidebar: React.FC<SidebarProps> = ({ darkMode, toggleDarkMode, selectedOpt
 
       <Box onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
         
+      <Box sx={{ padding: open ? 2 : 0, textAlign: 'center' }}>
+          {open ? (
+            <TextField
+              variant="outlined"
+              placeholder="Search"
+              size="small"
+              fullWidth
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <SearchIcon />
+                  </InputAdornment>
+                ),
+                sx: {
+                  fontFamily: 'Montserrat, sans-serif',
+                  '&::placeholder': {
+                    fontFamily: 'Montserrat, sans-serif',
+                  },
+                },
+              }}
+              inputProps={{
+                sx: {
+                  fontFamily: 'Montserrat, sans-serif',
+                },
+              }}
+            />
+          ) : (
+            <ListItem
+              sx={{
+                height: '42px',
+                marginTop: '14px',
+                marginBottom: '16px',
+                justifyContent: 'center',
+                cursor: 'pointer',
+                '&:hover': {
+                  backgroundColor: darkMode ? '#555' : '#f5f5f5',
+                },
+              }}
+            >
+              <ListItemIcon sx={{ minWidth: 'auto', color: darkMode ? "#03a9f4" : "#009af4" }}>
+                <IconButton size="small">
+                  <SearchIcon />
+                </IconButton>
+              </ListItemIcon>
+            </ListItem>
+          )}
+        </Box>
+
         {/* Home, Interactive Map, and Log In options */}
         <SidebarList
           category=""
@@ -79,6 +129,6 @@ const Sidebar: React.FC<SidebarProps> = ({ darkMode, toggleDarkMode, selectedOpt
       </Box>
     </Drawer>
   );
-};
+});
 
 export default Sidebar;

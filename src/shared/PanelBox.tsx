@@ -1,37 +1,68 @@
-import { Typography, Box, useTheme } from '@mui/material';
+import { Typography, Box, Button, useTheme, ThemeCssVarOverrides } from '@mui/material';
+
+interface ButtonConfig {
+  name: string;      // Button text
+  icon: JSX.Element; // Icon as JSX
+  onClick: () => void; // Click handler
+}
 
 interface PanelBoxProps {
   title: string;
   description: string;
-  color: 'primary' | 'secondary' | 'success';
+  color: string;
+  buttons: ButtonConfig[]; // New property for button configurations
 }
 
-const PanelBox: React.FC<PanelBoxProps> = ({ title, description, color }) => {
+const PanelBox: React.FC<PanelBoxProps> = ({ title, description, color, buttons }) => {
   const theme = useTheme();
+
   return (
     <Box
       sx={{
         padding: '16px',
-        border: '1px solid #ccc',
-        borderRadius: '8px',
-        boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-        transition: '0.3s',
-        '&:hover': {
-          boxShadow: '0 8px 16px rgba(0, 0, 0, 0.2)',
-        },
+        border: 'none',
       }}
     >
       <Typography
-        variant="h6"
+        variant="h5"
         sx={{
-          fontFamily: 'Montserrat, sans-serif',
+          fontFamily: 'Days One, sans-serif !important',
           fontWeight: 600,
-          color: theme.palette[color].main,
+          color: color,
         }}
       >
         {title}
       </Typography>
       <Typography variant="body1">{description}</Typography>
+
+      <Box
+        sx={{
+        //   display: 'flex',
+          justifyContent: 'space-between',
+          marginTop: '8px',
+        }}
+      >
+        {buttons.map((button, index) => (
+          <Button
+            key={index}
+            className="icon-button"
+            variant="outlined"
+            onClick={button.onClick}
+            sx={{
+              flex: 1,
+              margin: '8px 4px',
+              padding: '6px 16px',
+              border: 'none',
+              borderRadius: '8px',
+              boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+              color: color,
+              transition: '0.3s',
+            }}
+          >
+            <span>{button.name}</span>
+          </Button>
+        ))}
+      </Box>
     </Box>
   );
 };

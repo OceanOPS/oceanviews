@@ -1,12 +1,12 @@
 import { useState, useEffect, useRef } from 'react';
-import { Box, Typography, Grid } from '@mui/material';
-import PanelBox from '../shared/PanelBox';  
-import ChatBubble from '../shared/ChatBubble'; 
-import CustomTextField from '../shared/inputs/LargeChatField'; 
+import { Box, Typography, Grid, Button } from '@mui/material';
+import PanelBox from '../shared/PanelBox';
+import CustomTextField from '../shared/inputs/LargeChatField';
+import Sidebar from './sidebar/Sidebar';
 
-const Home: React.FC = () => {
-  const inputRef = useRef<HTMLInputElement>(null); 
-  const [messages, setMessages] = useState<{ content: string, side: 'left' | 'right' }[]>([]);
+const Home: React.FC<{ setSidebarOpen: (open: boolean) => void; }> = ({ setSidebarOpen }) => {
+  const inputRef = useRef<HTMLInputElement>(null);
+  const sidebarSearchRef = useRef<HTMLInputElement | null>(null); // Reference for sidebar search field
   const [currentMessage, setCurrentMessage] = useState('');
 
   useEffect(() => {
@@ -15,62 +15,107 @@ const Home: React.FC = () => {
     }
   }, []);
 
-  const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === 'Enter' && currentMessage.trim() !== '') {
-      setMessages(prevMessages => [
-        ...prevMessages,
-        { content: currentMessage, side: 'right' }, 
-        { content: "Our apologies, the AI chat functionality is not available quite yet. Stay tuned!", side: 'left' },
-      ]);
-      setCurrentMessage('');
+  useEffect(() => {
+    if (currentMessage.length > 2 && sidebarSearchRef.current) {
+      setSidebarOpen(true); // Open sidebar
+      sidebarSearchRef.current.value = currentMessage; // Transfer text
+      sidebarSearchRef.current.focus(); // Focus sidebar search
+      setCurrentMessage(''); // Clear main input
     }
+  }, [currentMessage, setSidebarOpen]);
+
+  const handleButtonClick = (text: string) => {
+    setCurrentMessage(text);
   };
 
+  const buttonExamples = [
+    { label: 'USA', color: '#777777' },
+    { label: 'Maria', color: '#777777' },
+    { label: 'Argo', color: '#777777' },
+    { label: '2901777', color: '#777777' }
+  ];
+
+  const monitoringButtonConfigs = [
+    { name: "GOOS Dashboard", icon: <span role="img" aria-label="search">🔍</span>, onClick: () => {} },
+    { name: "Static Maps", icon: <span role="img" aria-label="edit">✏️</span>, onClick: () => {} },
+    { name: "Report cards", icon: <span role="img" aria-label="report">📊</span>, onClick: () => {} },
+    { name: "KPIs", icon: <span role="img" aria-label="report">📊</span>, onClick: () => {} },
+    { name: "Alerts", icon: <span role="img" aria-label="report">📊</span>, onClick: () => {} },
+  ];
+
+  const integrationButtonConfigs = [
+    { name: "Request IDs", icon: <span role="img" aria-label="search">🔍</span>, onClick: () => {} },
+    { name: "File Upload", icon: <span role="img" aria-label="edit">✏️</span>, onClick: () => {} },
+    { name: "Submit forms", icon: <span role="img" aria-label="report">📊</span>, onClick: () => {} },
+    { name: "API", icon: <span role="img" aria-label="report">📊</span>, onClick: () => {} },
+  ];
+
+  const coordinationButtonConfigs = [
+    { name: "Plan cruises", icon: <span role="img" aria-label="search">🔍</span>, onClick: () => {} },
+    { name: "Quality Control", icon: <span role="img" aria-label="edit">✏️</span>, onClick: () => {} },
+    { name: "Coordinators", icon: <span role="img" aria-label="report">📊</span>, onClick: () => {} },
+    { name: "Outreach", icon: <span role="img" aria-label="report">📊</span>, onClick: () => {} },
+  ];
+
   return (
-    <Box sx={{ height: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', padding: 2, textAlign: 'center', maxWidth: '1200px', margin: '0 auto' }}>
-      <Grid item xs={12} md={4}>
-        <Typography variant="h6" gutterBottom sx={{ whiteSpace: 'pre-line' }}>
-          OceanViews is a free and open-source user interface.{"\n"} Focused on coordinating and monitoring the GOOS.{"\n"}
-          Co-developed by over one hundred GOOS agencies.
-        </Typography>
-      </Grid>
-
-      <Box sx={{ marginTop: 5 }}></Box>
-
-      {/* Three horizontal panels */}
-      <Grid container spacing={3} justifyContent="center">
-        <Grid item xs={12} md={4}>
-          <PanelBox title="Monitor" description="Create, manage and share customisable monitoring dashboards." color="primary" />
-        </Grid>
-        <Grid item xs={12} md={4}>
-          <PanelBox title="Import" description="Submit metadata into the OceanAPI through user forms and file uploads." color="secondary" />
-        </Grid>
-        <Grid item xs={12} md={4}>
-          <PanelBox title="Export" description="Export metadata in various formats and generate customized reports." color="success" />
-        </Grid>
-      </Grid>
-
-      <Box sx={{ marginTop: 6 }}></Box>
-
-      <Typography variant="h5" gutterBottom sx={{ marginTop: 4 }}>What can we help you with?</Typography>
-
-      <Box sx={{ marginTop: 4, width: '100%', maxWidth: '600px', display: 'flex', flexDirection: 'column' }}>
-        {messages.map((message, index) => (
-          <ChatBubble key={index} side={message.side}>
-            {message.content}
-          </ChatBubble>
-        ))}
-      </Box>
-      
+    <Box sx={{
+      height: '100vh',
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
+      alignItems: 'center',
+      padding: 2,
+      textAlign: 'center',
+      maxWidth: '1200px',
+      margin: '0 auto'
+    }}>
       <Box sx={{ marginTop: 2, width: '100%', maxWidth: '600px' }}>
         <CustomTextField
-          placeholder="Message our AI here"
-          value={currentMessage}
-          inputRef={inputRef}
-          onChange={(e) => setCurrentMessage(e.target.value)}
-          onKeyPress={handleKeyPress}
-        />
+				  placeholder="Search anything"
+				  value={currentMessage}
+				  inputRef={inputRef}
+				  onChange={(e) => setCurrentMessage(e.target.value)} onKeyPress={function (event: React.KeyboardEvent<HTMLInputElement>): void {
+					  throw new Error('Function not implemented.');
+				  } }        />
+
+        <Box sx={{ display: 'flex', justifyContent: 'space-between', marginTop: 2 }}>
+          <Typography variant="body1" sx={{ marginTop: 1, marginBottom: 1, marginRight: 1.5 }}>
+            Try these examples:
+          </Typography>
+          {buttonExamples.map((example, index) => (
+            <Button
+              key={index}
+              size="small"
+              variant="outlined"
+              onClick={() => handleButtonClick(example.label)}
+              sx={{
+                flex: 1,
+                margin: '4px 6px',
+                padding: '0px 0px',
+                border: 'none',
+                borderRadius: '8px',
+                boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+                color: example.color,
+                transition: '0.3s',
+              }}
+            >
+              {example.label}
+            </Button>
+          ))}
+        </Box>
       </Box>
+
+      <Grid container spacing={3} justifyContent="center" sx={{ marginTop: 18 }}>
+        <Grid item xs={12} md={4}>
+          <PanelBox title="Monitoring" description="Dashboards and Reports" color="#18ba9b" buttons={monitoringButtonConfigs} />
+        </Grid>
+        <Grid item xs={12} md={4}>
+          <PanelBox title="Integration" description="Submit and Edit Metadata" color="#ff8d6a" buttons={integrationButtonConfigs} />
+        </Grid>
+        <Grid item xs={12} md={4}>
+          <PanelBox title="Coordination" description="Tools for Operators" color="#ff7e7e" buttons={coordinationButtonConfigs} />
+        </Grid>
+      </Grid>
     </Box>
   );
 };
