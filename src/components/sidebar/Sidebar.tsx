@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { Drawer, Box, TextField, InputAdornment, IconButton, ListItemIcon, ListItem } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import SidebarHeader from './SidebarHeader'; 

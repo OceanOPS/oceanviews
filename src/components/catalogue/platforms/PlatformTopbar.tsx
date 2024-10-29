@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
-import { useTheme } from '@mui/material';
 import TopbarLayout from '../../../shared/TopbarLayout';
 import { PlatformFilters, PlatformCategories } from './platformFilters';
 import FilterDialog from '../../../shared/FilterDialog'; 
 
 const PlatformTopbar: React.FC = () => {
-  const theme = useTheme();
 
   const [filtersVisibility, setFiltersVisibility] = useState(() =>
     PlatformFilters.reduce((acc, filter) => {

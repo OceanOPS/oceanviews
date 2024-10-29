@@ -65,7 +65,7 @@ const AutocompleteField: React.FC<AutocompleteFieldProps> = ({ label, url, value
       options={options}
       value={value}
       getOptionLabel={(option) => option.label}
-      onChange={(event, newValue) => onChange(newValue as FilterOption[])}
+      onChange={(_event, newValue) => onChange(newValue as FilterOption[])}
       renderTags={(value: FilterOption[], getTagProps) =>
         value.map((option, index) => (
           <Chip label={option.label} {...getTagProps({ index })} />

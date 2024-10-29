@@ -86,7 +86,7 @@ const Home: React.FC<HomeProps> = ({ sidebarSearchRef, setSearchText }) => {
 				  placeholder="Search the GOOS"
 				  value={currentMessage}
 				  inputRef={inputRef}
-				  onChange={(e) => setCurrentMessage(e.target.value)} onKeyPress={function (event: React.KeyboardEvent<HTMLInputElement>): void {
+				  onChange={(e) => setCurrentMessage(e.target.value)} onKeyPress={function (): void {
 					  throw new Error('Function not implemented.');
 				  } }        />
 

@@ -34,7 +34,7 @@ const CatalogueTable: React.FC<CatalogueTableProps> = ({ entity, apiUrl, columns
       });
   }, [apiUrl]);
 
-  const handleChangePage = (event: unknown, newPage: number) => {
+  const handleChangePage = (_event: unknown, newPage: number) => {
     setPage(newPage);
   };
 

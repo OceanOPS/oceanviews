@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import { Box, Typography } from '@mui/material';
 import { Responsive, WidthProvider } from 'react-grid-layout';
 import PlatformTopbar from '../catalogue/platforms/PlatformTopbar'; 
@@ -10,7 +10,7 @@ const ResponsiveGridLayout = WidthProvider(Responsive);
 
 const Summary: React.FC = () => {
   const theme = useTheme(); 
-  const [topBarHeight, setTopBarHeight] = useState<number>(72);
+  const [topBarHeight] = useState<number>(72);
   const topBarRef = useRef<HTMLDivElement | null>(null); 
   
   const layout = [

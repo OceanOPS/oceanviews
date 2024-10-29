@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Box, TextField, MenuItem, useTheme } from '@mui/material';
 
 const SummaryPieChart: React.FC = () => {
   const theme = useTheme();
-  const [chart, setChart] = useState<any>(null); 
+  const chartRef = useRef<any>(null);  // Use useRef to store the chart instance
   const [groupBy, setGroupBy] = useState<string>('Status'); 
-  const [data, setData] = useState<any[]>([]); 
+  const [data, setData] = useState<any[]>([]);
 
   const groupByOptions = ['Status', 'Country', 'Network', 'Program', 'Model', 'Telecom type'];
 
@@ -80,12 +80,12 @@ const SummaryPieChart: React.FC = () => {
           align: 'center',
           markerType: 'circle',
         },
-        autoMargins: false, 
-        marginTop: 10, 
-        marginBottom: 10, 
-        marginLeft: 10, 
-        marginRight: 10, 
-        pullOutRadius: '5%', 
+        autoMargins: false,
+        marginTop: 10,
+        marginBottom: 10,
+        marginLeft: 10,
+        marginRight: 10,
+        pullOutRadius: '5%',
         labelRadius: 15,
         fontSize: 14,
         export: {
@@ -93,13 +93,13 @@ const SummaryPieChart: React.FC = () => {
         },
       };
 
-      const chartInstance = window.AmCharts.makeChart('chartdiv', chartConfig);
+      // Create the chart instance and store it in the ref
+      chartRef.current = window.AmCharts.makeChart('chartdiv', chartConfig);
 
-      setChart(chartInstance);
-
+      // Clean up chart instance on unmount
       return () => {
-        if (chartInstance) {
-          chartInstance.clear(); 
+        if (chartRef.current) {
+          chartRef.current.clear();
         }
       };
     }
@@ -109,12 +109,12 @@ const SummaryPieChart: React.FC = () => {
     <Box>
       <TextField
         select
-        size='small'
+        size="small"
         label="Group By"
         value={groupBy}
         onChange={(e) => setGroupBy(e.target.value)}
         variant="outlined"
-        sx={{ marginBottom: 0, width: 300,marginTop: 2, }}
+        sx={{ marginBottom: 0, width: 300, marginTop: 2 }}
       >
         {groupByOptions.map((option) => (
           <MenuItem key={option} value={option}>

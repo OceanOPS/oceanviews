@@ -91,7 +91,7 @@ const NetworkField: React.FC<NetworkFieldProps> = ({ label, url, value, onChange
         },
       }}
       value={value}
-      onChange={(event, newValue) => onChange(newValue as NetworkOption[])}
+      onChange={(_event, newValue) => onChange(newValue as NetworkOption[])}
       getOptionLabel={(option: NetworkOption) => option.label}
       renderInput={(params) => (
         <TextField {...params} label={label} />

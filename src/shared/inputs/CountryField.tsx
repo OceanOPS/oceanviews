@@ -67,7 +67,7 @@ const CountryField: React.FC<CountryFieldProps> = ({ label, url, value, onChange
       options={options}
       value={value}
       getOptionLabel={(option) => option.label}
-      onChange={(event, newValue) => onChange(newValue as CountryOption[])}
+      onChange={(_event, newValue) => onChange(newValue as CountryOption[])}
       renderTags={(value: CountryOption[], getTagProps) =>
         value.map((option, index) => (
           <Chip

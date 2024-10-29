@@ -8,22 +8,6 @@ const Platforms: React.FC = () => {
   const topBarRef = useRef<HTMLDivElement | null>(null); 
 
   
-
-  const updateDataWithFilters = (filters: any) => {
-    const params = new URLSearchParams();
-    Object.keys(filters).forEach((filterKey) => {
-      if (filters[filterKey] && filters[filterKey].length > 0) {
-        params.append(filterKey, filters[filterKey].join(','));
-      }
-    });
-
-    fetch(`/api/platforms?${params.toString()}`)
-      .then((response) => response.json())
-      .then((data) => {
-        // Handle platform data refresh
-      });
-  };
-
   useEffect(() => {
     const handleResize = () => {
       if (topBarRef.current) {

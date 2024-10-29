@@ -76,7 +76,7 @@ const SearchPage: React.FC<SearchPageProps> = ({ searchText }) => {
         setResults(data);
         setLoading(false);
       })
-      .catch(err => {
+      .catch(() => {
         setError("Error fetching results");
         setLoading(false);
       });

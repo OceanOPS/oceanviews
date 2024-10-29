@@ -1,4 +1,4 @@
-import { Typography, Box, Button, useTheme, ThemeCssVarOverrides } from '@mui/material';
+import { Typography, Box, Button, useTheme } from '@mui/material';
 
 interface ButtonConfig {
   name: string;      // Button text
