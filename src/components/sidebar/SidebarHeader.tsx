@@ -18,10 +18,10 @@ const SidebarHeader: React.FC<SidebarHeaderProps> = ({ open, setOpen, darkMode }
         color: darkMode ? "#03a9f4" : "#009af4",
       }}
     >
-      <Typography variant="h6" noWrap sx={{ display: open ? 'block' : 'none', paddingLeft: '10px', marginRight: '0px' }}>
+      <Typography variant="h5" noWrap sx={{ display: open ? 'block' : 'none', paddingLeft: '10px', marginRight: '0px' }}>
         Ocean
-        <Typography variant="h6" component="span" sx={{ fontWeight: '600' }}>
-          Views
+        <Typography variant="h5" component="span" sx={{ fontWeight: '600' }}>
+          UI
         </Typography>
       </Typography>
       <IconButton onClick={() => setOpen(!open)}>

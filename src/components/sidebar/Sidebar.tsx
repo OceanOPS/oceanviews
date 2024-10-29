@@ -1,4 +1,4 @@
-import { useState, forwardRef } from 'react';
+import { useState } from 'react';
 import { Drawer, Box, TextField, InputAdornment, IconButton, ListItemIcon, ListItem } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import SidebarHeader from './SidebarHeader'; 
@@ -11,14 +11,24 @@ interface SidebarProps {
   toggleDarkMode: () => void;
   selectedOption: SidebarOption;
   setSelectedOption: (option: SidebarOption) => void;
+  sidebarSearchRef: React.RefObject<HTMLInputElement>;
+  setSearchText: (text: string) => void;
+  open: boolean;
+  setOpen: (open: boolean) => void;
 }
 
-const Sidebar = forwardRef(({ darkMode, toggleDarkMode, selectedOption, setSelectedOption }: SidebarProps, ref) => {
-	const [open, setOpen] = useState(true);
-
-
+const Sidebar: React.FC<SidebarProps> = ({ darkMode, toggleDarkMode, selectedOption, setSelectedOption, sidebarSearchRef, setSearchText, open, setOpen }) => {
+	
   const handleMouseEnter = () => setOpen(true);
   const handleMouseLeave = () => {};
+
+  const handleSearchFocus = () => {
+    setSelectedOption("Search");
+  };
+
+  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchText(event.target.value);
+  };
 
   return (
     <Drawer
@@ -41,9 +51,12 @@ const Sidebar = forwardRef(({ darkMode, toggleDarkMode, selectedOption, setSelec
       <Box sx={{ padding: open ? 2 : 0, textAlign: 'center' }}>
           {open ? (
             <TextField
+			  inputRef={sidebarSearchRef}
               variant="outlined"
-              placeholder="Search"
+              placeholder="Search the GOOS"
               size="small"
+			  onFocus={handleSearchFocus} 
+			  onChange={handleSearchChange}
               fullWidth
               InputProps={{
                 startAdornment: (
@@ -129,6 +142,6 @@ const Sidebar = forwardRef(({ darkMode, toggleDarkMode, selectedOption, setSelec
       </Box>
     </Drawer>
   );
-});
+};
 
 export default Sidebar;

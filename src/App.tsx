@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { CssBaseline, Box, createTheme, ThemeProvider } from '@mui/material';
 import Sidebar from './components/sidebar/Sidebar';
 import { SidebarOption } from './types/types';
@@ -15,12 +15,17 @@ import CruisePlanning from './components/dashboards/CruisePlanning';
 import CreateDashboard from './components/dashboards/CreateDashboard';
 import CreateReport from './components/reports/CreateReport';
 import MonthlyAnalysis from './components/reports/MonthlyAnalysis';
+import SearchPage from './components/SearchPage';
 import Home from './components/Home';
 
 function App() {
   const [darkMode, setDarkMode] = useState(false);
   const [selectedOption, setSelectedOption] = useState<SidebarOption>('Home');
+  const [searchText, setSearchText] = useState('');
+  const [sidebarOpen, setSidebarOpen] = useState(true);
 
+  const sidebarSearchRef = useRef<HTMLInputElement>(null);
+  
   const theme = createTheme({
     palette: {
       mode: darkMode ? 'dark' : 'light',
@@ -29,6 +34,11 @@ function App() {
 
   const toggleDarkMode = () => {
     setDarkMode(!darkMode);
+  };
+
+  const handleSetSearchText = (text: string) => {
+    setSidebarOpen(true);
+    setSearchText(text);
   };
 
   return (
@@ -40,6 +50,10 @@ function App() {
           toggleDarkMode={toggleDarkMode} 
           selectedOption={selectedOption}
           setSelectedOption={setSelectedOption}
+		  sidebarSearchRef={sidebarSearchRef}
+		  setSearchText={handleSetSearchText}
+		  open={sidebarOpen}
+          setOpen={setSidebarOpen}
         />
         <Box 
           component="main" 
@@ -52,6 +66,7 @@ function App() {
           }}
         >
           <Box sx={{ width: '100%', flexGrow: 1 }}> 
+		    {selectedOption === 'Search' && <SearchPage  searchText={searchText} />}
             {selectedOption === 'Platforms' && <Platforms />}
             {selectedOption === 'Cruises' && <Cruises />}
             {selectedOption === 'Ships' && <Ships />}
@@ -68,7 +83,7 @@ function App() {
             {selectedOption === 'Create Dashboard' && <CreateDashboard />}
             {selectedOption === 'Create Report' && <CreateReport />}
             {selectedOption === 'Monthly Analysis' && <MonthlyAnalysis />}
-            {selectedOption === 'Home' && <Home />}
+            {selectedOption === 'Home' && <Home sidebarSearchRef={sidebarSearchRef}  setSearchText={handleSetSearchText}/>}
           </Box>
         </Box>
       </Box>

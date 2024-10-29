@@ -2,11 +2,15 @@ import { useState, useEffect, useRef } from 'react';
 import { Box, Typography, Grid, Button } from '@mui/material';
 import PanelBox from '../shared/PanelBox';
 import CustomTextField from '../shared/inputs/LargeChatField';
-import Sidebar from './sidebar/Sidebar';
 
-const Home: React.FC<{ setSidebarOpen: (open: boolean) => void; }> = ({ setSidebarOpen }) => {
+interface HomeProps {
+	sidebarSearchRef: React.RefObject<HTMLInputElement>;
+	setSearchText: (text: string) => void;
+  }
+  
+
+const Home: React.FC<HomeProps> = ({ sidebarSearchRef, setSearchText }) => {
   const inputRef = useRef<HTMLInputElement>(null);
-  const sidebarSearchRef = useRef<HTMLInputElement | null>(null); // Reference for sidebar search field
   const [currentMessage, setCurrentMessage] = useState('');
 
   useEffect(() => {
@@ -16,13 +20,17 @@ const Home: React.FC<{ setSidebarOpen: (open: boolean) => void; }> = ({ setSideb
   }, []);
 
   useEffect(() => {
-    if (currentMessage.length > 2 && sidebarSearchRef.current) {
-      setSidebarOpen(true); // Open sidebar
-      sidebarSearchRef.current.value = currentMessage; // Transfer text
-      sidebarSearchRef.current.focus(); // Focus sidebar search
-      setCurrentMessage(''); // Clear main input
-    }
-  }, [currentMessage, setSidebarOpen]);
+    if (currentMessage.length > 2) {
+	  	setSearchText(currentMessage);
+		setTimeout(() => {
+			if(sidebarSearchRef.current){
+				sidebarSearchRef.current.value = currentMessage; 
+				sidebarSearchRef.current.focus(); 
+			}
+		}, 150);
+	}
+	
+  }, [currentMessage]);
 
   const handleButtonClick = (text: string) => {
     setCurrentMessage(text);
@@ -32,7 +40,7 @@ const Home: React.FC<{ setSidebarOpen: (open: boolean) => void; }> = ({ setSideb
     { label: 'USA', color: '#777777' },
     { label: 'Maria', color: '#777777' },
     { label: 'Argo', color: '#777777' },
-    { label: '2901777', color: '#777777' }
+    { label: '290177', color: '#777777' }
   ];
 
   const monitoringButtonConfigs = [
@@ -71,7 +79,7 @@ const Home: React.FC<{ setSidebarOpen: (open: boolean) => void; }> = ({ setSideb
     }}>
       <Box sx={{ marginTop: 2, width: '100%', maxWidth: '600px' }}>
         <CustomTextField
-				  placeholder="Search anything"
+				  placeholder="Search the GOOS"
 				  value={currentMessage}
 				  inputRef={inputRef}
 				  onChange={(e) => setCurrentMessage(e.target.value)} onKeyPress={function (event: React.KeyboardEvent<HTMLInputElement>): void {

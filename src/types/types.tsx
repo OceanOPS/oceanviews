@@ -14,6 +14,7 @@ import {
   import AddIcon from '@mui/icons-material/Add';
   import AutoGraphIcon from '@mui/icons-material/AutoGraph';
   import ImportExportIcon from '@mui/icons-material/ImportExport';
+  import SearchIcon from '@mui/icons-material/Search';
   
   export type SidebarOption = 
     | 'Home'
@@ -31,7 +32,8 @@ import {
     | 'Cruise Planning'
     | 'Create Dashboard'
     | 'Monthly Analysis'
-    | 'Create Report';
+    | 'Create Report'
+    | 'Search';
   
   export const iconMapping: Record<SidebarOption, JSX.Element> = {
     "Home": <HomeIcon />,
@@ -50,5 +52,6 @@ import {
     "Create Dashboard": <AddIcon />,
     "Monthly Analysis": <AutoGraphIcon />,
     "Create Report": <AddIcon />,
+    "Search": <SearchIcon />,
   };
   
