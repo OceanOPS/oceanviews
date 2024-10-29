@@ -102,7 +102,7 @@ const Sidebar: React.FC<SidebarProps> = ({ darkMode, toggleDarkMode, selectedOpt
         {/* Home, Interactive Map, and Log In options */}
         <SidebarList
           category=""
-          options={['Home', 'Log In', 'Map']}
+          options={['Home', 'Log In']}
           selectedOption={selectedOption}
           setSelectedOption={setSelectedOption}
           darkMode={darkMode}
@@ -112,7 +112,7 @@ const Sidebar: React.FC<SidebarProps> = ({ darkMode, toggleDarkMode, selectedOpt
         {/* Other sections */}
         <SidebarList
           category="DASHBOARDS"
-          options={['Summary', 'Implementation', 'Instrumentation', 'Cruise Planning', 'Create Dashboard']}
+          options={['Operational GOOS','Summary', 'Implementation', 'Instrumentation', 'Cruise Planning', 'Create Dashboard']}
           selectedOption={selectedOption}
           setSelectedOption={setSelectedOption}
           darkMode={darkMode}

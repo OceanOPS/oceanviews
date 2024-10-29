@@ -1,7 +1,8 @@
 import { useState, useEffect, useRef } from 'react';
-import { Box, Typography, Grid, Button } from '@mui/material';
+import { Box, Typography, Grid, Button, useTheme } from '@mui/material';
 import PanelBox from '../shared/PanelBox';
 import CustomTextField from '../shared/inputs/LargeChatField';
+import SponsorFooter from './SponsorFooter';
 
 interface HomeProps {
 	sidebarSearchRef: React.RefObject<HTMLInputElement>;
@@ -12,6 +13,8 @@ interface HomeProps {
 const Home: React.FC<HomeProps> = ({ sidebarSearchRef, setSearchText }) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const [currentMessage, setCurrentMessage] = useState('');
+  const theme = useTheme();
+  const isDarkMode = theme.palette.mode === 'dark';
 
   useEffect(() => {
     if (inputRef.current) {
@@ -73,6 +76,7 @@ const Home: React.FC<HomeProps> = ({ sidebarSearchRef, setSearchText }) => {
       justifyContent: 'center',
       alignItems: 'center',
       padding: 2,
+      paddingBottom: 0,
       textAlign: 'center',
       maxWidth: '1200px',
       margin: '0 auto'
@@ -103,8 +107,12 @@ const Home: React.FC<HomeProps> = ({ sidebarSearchRef, setSearchText }) => {
                 border: 'none',
                 borderRadius: '8px',
                 boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-                color: example.color,
+                color: isDarkMode ? '#fafafa' : '#777777',
                 transition: '0.3s',
+				backgroundColor: isDarkMode ? '#333333' : 'transparent',
+				'&:hover': {
+				  backgroundColor: isDarkMode ? '#444444' : 'rgba(0, 0, 0, 0.04)',
+				},
               }}
             >
               {example.label}
@@ -124,6 +132,9 @@ const Home: React.FC<HomeProps> = ({ sidebarSearchRef, setSearchText }) => {
           <PanelBox title="Coordination" description="Tools for Operators" color="#ff7e7e" buttons={coordinationButtonConfigs} />
         </Grid>
       </Grid>
+
+	  <SponsorFooter />
+
     </Box>
   );
 };

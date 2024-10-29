@@ -19,7 +19,7 @@ import {
   export type SidebarOption = 
     | 'Home'
     | 'Log In'
-    | 'Map'
+    | 'Operational GOOS'
     | 'Summary'
     | 'Implementation'
     | 'Instrumentation'
@@ -38,7 +38,7 @@ import {
   export const iconMapping: Record<SidebarOption, JSX.Element> = {
     "Home": <HomeIcon />,
     "Log In": <LoginIcon />,
-    "Map": <MapIcon />,
+    "Operational GOOS": <MapIcon />,
     "Summary": <AssessmentIcon />,
     "Implementation": <BuildIcon />,
     "Instrumentation": <SettingsInputComponentIcon />,

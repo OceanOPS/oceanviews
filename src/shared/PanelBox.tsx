@@ -14,7 +14,8 @@ interface PanelBoxProps {
 }
 
 const PanelBox: React.FC<PanelBoxProps> = ({ title, description, color, buttons }) => {
-  const theme = useTheme();
+	const theme = useTheme();
+	const isDarkMode = theme.palette.mode === 'dark';
 
   return (
     <Box
@@ -57,6 +58,10 @@ const PanelBox: React.FC<PanelBoxProps> = ({ title, description, color, buttons 
               boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
               color: color,
               transition: '0.3s',
+			  backgroundColor: isDarkMode ? '#333333' : 'transparent',
+              '&:hover': {
+                backgroundColor: isDarkMode ? '#444444' : 'rgba(0, 0, 0, 0.04)',
+              },
             }}
           >
             <span>{button.name}</span>

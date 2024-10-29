@@ -83,12 +83,15 @@ const SearchPage: React.FC<SearchPageProps> = ({ searchText }) => {
   }, [searchText]);
 
   useEffect(() => {
-    const grouped: GroupedResults = results.reduce((acc, result) => {
+	if (Array.isArray(results)) {  // Ensure `results` is an array
+	  const grouped: GroupedResults = results.reduce((acc, result) => {
 		(acc[result.itemType] = acc[result.itemType] || []).push(result);
 		return acc;
 	  }, {} as GroupedResults);
-	  
 	  setGroupedResults(grouped);
+	} else {
+	  console.error("Expected `results` to be an array but got", results);
+	}
   }, [results]);
 
   return (

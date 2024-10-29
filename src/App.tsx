@@ -7,7 +7,7 @@ import Cruises from './components/catalogue/cruises/CruiseTable';
 import Ships from './components/catalogue/ships/ShipTable';
 import Lines from './components/catalogue/lines/LineTable';
 import Contacts from './components/catalogue/contacts/ContactTable';
-import InteractiveMap from './components/dashboards/InteractiveMap';
+import OperationalGoos from './components/dashboards/OperationalGoos';
 import Summary from './components/dashboards/Summary';
 import Implementation from './components/dashboards/Implementation';
 import Instrumentation from './components/dashboards/Instrumentation';
@@ -73,8 +73,8 @@ function App() {
             {selectedOption === 'Lines' && <Lines />}
             {selectedOption === 'Contacts' && <Contacts />}
             {/* Keep InteractiveMap loaded, just hide it when not active */}
-            <Box sx={{ display: selectedOption === 'Map' ? 'block' : 'none' }}>
-              <InteractiveMap />
+            <Box sx={{ display: selectedOption === 'Operational GOOS' ? 'block' : 'none' }}>
+              <OperationalGoos />
             </Box>
             {selectedOption === 'Summary' && <Summary />}
             {selectedOption === 'Implementation' && <Implementation />}

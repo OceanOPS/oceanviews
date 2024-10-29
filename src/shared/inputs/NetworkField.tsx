@@ -29,12 +29,15 @@ const NetworkField: React.FC<NetworkFieldProps> = ({ label, url, value, onChange
       try {
         const response = await fetch(url);
         const data = await response.json();
-        const fetchedOptions = data.map((item: any) => ({
-          label: item.name,
-          value: item.id,
-          rank: item.rank, 
-          masterprog: item.masterprog, 
-        }));
+        const fetchedOptions = Array.isArray(data) 
+		? data.map((item: any) => ({
+			label: item.name,
+			value: item.id,
+			rank: item.rank,
+			masterprog: item.masterprog,
+			}))
+		: [];
+
         
         const sortNetworks = (a: NetworkOption, b: NetworkOption) => {
             const aMasterprog = a.masterprog ?? '';  
@@ -77,7 +80,7 @@ const NetworkField: React.FC<NetworkFieldProps> = ({ label, url, value, onChange
       options={options}
 	  size="small"
       sx={{
-        minWidth: '200px',
+        minWidth: '260px',
         '& .MuiOutlinedInput-root': {
           backgroundColor: 'background.default',
           color: 'text.primary',
