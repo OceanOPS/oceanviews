@@ -14,7 +14,7 @@
     "@emotion/styled": "^11.13.0",
     "@mui/icons-material": "^6.1.4",
     "@mui/material": "^6.1.4",
-    "@mui/x-date-pickers": "^7.21.0",
+    "@mui/x-date-pickers": "7.21.0",
     "dayjs": "^1.11.13",
     "oceanviews": "file:../oceanviews",
     "react": "^18.3.1",
@@ -22,7 +22,8 @@
     "react-grid-layout": "^1.5.0",
     "react-select": "^5.8.1",
     "react-virtuoso": "^4.12.0",
-    "ui": "file:../oceanviews"
+    "ui": "file:../oceanviews",
+    "vite-plugin-svgr": "^4.2.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.11.1",

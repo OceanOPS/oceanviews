@@ -13,16 +13,16 @@ import Implementation from './components/dashboards/Implementation';
 import Instrumentation from './components/dashboards/Instrumentation';
 import CruisePlanning from './components/dashboards/CruisePlanning';
 import CreateDashboard from './components/dashboards/CreateDashboard';
-import CreateReport from './components/reports/CreateReport';
-import MonthlyAnalysis from './components/reports/MonthlyAnalysis';
-import SearchPage from './components/SearchPage';
+import MainTopbar from './components/MainTopbar';
 import Home from './components/Home';
+import SearchPage from './components/SearchPage';
 
 function App() {
   const [darkMode, setDarkMode] = useState(false);
   const [selectedOption, setSelectedOption] = useState<SidebarOption>('Home');
   const [searchText, setSearchText] = useState('');
   const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [searchActive, setSearchActive] = useState(false);
 
   const sidebarSearchRef = useRef<HTMLInputElement>(null);
   
@@ -32,60 +32,89 @@ function App() {
     },
   });
 
-  const toggleDarkMode = () => {
-    setDarkMode(!darkMode);
-  };
+  const toggleDarkMode = () => setDarkMode((prevMode) => !prevMode);
 
   const handleSetSearchText = (text: string) => {
-    setSidebarOpen(true);
     setSearchText(text);
+  };
+
+  const handleSearchFocus = () => {
+    setSearchActive(true);
+  };
+
+  const handleSearchBlur = () => {
+    setSearchActive(false);
   };
 
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Box sx={{ display: 'flex', height: '100vh', width: '100vw' }}>
-        <Sidebar 
-          darkMode={darkMode} 
-          toggleDarkMode={toggleDarkMode} 
-          selectedOption={selectedOption}
-          setSelectedOption={setSelectedOption}
-		  sidebarSearchRef={sidebarSearchRef}
-		  setSearchText={handleSetSearchText}
-		  open={sidebarOpen}
-          setOpen={setSidebarOpen}
-        />
-        <Box 
-          component="main" 
-          sx={{ 
-            flexGrow: 1, 
-            p: 0, 
-            display: 'flex', 
-            flexDirection: 'column',
-            width: 'calc(100% - [sidebar-width])'
+
+      <MainTopbar
+        darkMode={darkMode}
+        toggleDarkMode={toggleDarkMode}
+        sidebarSearchRef={sidebarSearchRef}
+        setSearchText={handleSetSearchText}
+		sidebarOpen={sidebarOpen}  
+        setSidebarOpen={setSidebarOpen}  
+		onSearchFocus={handleSearchFocus} 
+        onSearchBlur={handleSearchBlur} 
+      />
+
+      <Box sx={{ display: 'flex', height: 'calc(100vh - 64px)', width: '100vw', marginTop: '64px' }}>
+       
+        <Box
+          sx={{
+            width: sidebarOpen ? 280 : 60,
+            transition: 'width 0.3s',
+            height: '100%',
+            position: 'relative',
+            zIndex: 1,
           }}
         >
-          <Box sx={{ width: '100%', flexGrow: 1 }}> 
-		    {selectedOption === 'Search' && <SearchPage  searchText={searchText} />}
-            {selectedOption === 'Platforms' && <Platforms />}
-            {selectedOption === 'Cruises' && <Cruises />}
-            {selectedOption === 'Ships' && <Ships />}
-            {selectedOption === 'Lines' && <Lines />}
-            {selectedOption === 'Contacts' && <Contacts />}
-            {/* Keep InteractiveMap loaded, just hide it when not active */}
-            <Box sx={{ display: selectedOption === 'Operational GOOS' ? 'block' : 'none' }}>
-              <OperationalGoos />
-            </Box>
-            {selectedOption === 'Summary' && <Summary />}
-            {selectedOption === 'Implementation' && <Implementation />}
-            {selectedOption === 'Instrumentation' && <Instrumentation />}
-            {selectedOption === 'Cruise Planning' && <CruisePlanning />}
-            {selectedOption === 'Create Dashboard' && <CreateDashboard />}
-            {selectedOption === 'Create Report' && <CreateReport />}
-            {selectedOption === 'Monthly Analysis' && <MonthlyAnalysis />}
-            {selectedOption === 'Home' && <Home sidebarSearchRef={sidebarSearchRef}  setSearchText={handleSetSearchText}/>}
-          </Box>
+          <Sidebar
+            darkMode={darkMode}
+            toggleDarkMode={toggleDarkMode}
+            selectedOption={selectedOption}
+            setSelectedOption={setSelectedOption}
+            sidebarSearchRef={sidebarSearchRef}
+            setSearchText={handleSetSearchText}
+            open={sidebarOpen}
+            setOpen={setSidebarOpen}
+          />
         </Box>
+
+		<Box
+		component="main"
+		sx={{
+			flexGrow: 1,
+			p: 0,
+			overflow: 'auto',
+			height: 'calc(100vh - 64px)', 
+			width: '100%',
+		}}
+		>
+			
+		{searchActive ? (
+            <SearchPage searchText={searchText} />
+          ) : (
+            <>
+              {selectedOption === 'Platforms' && <Platforms />}
+              {selectedOption === 'Cruises' && <Cruises />}
+              {selectedOption === 'Ships' && <Ships />}
+              {selectedOption === 'Lines' && <Lines />}
+              {selectedOption === 'Contacts' && <Contacts />}
+              {selectedOption === 'GOOS' && <OperationalGoos />}
+              {selectedOption === 'Argo' && <Summary />}
+              {selectedOption === 'Implementation' && <Implementation />}
+              {selectedOption === 'Instrumentation' && <Instrumentation />}
+              {selectedOption === 'Cruise Planning' && <CruisePlanning />}
+              {selectedOption === 'Create Dashboard' && <CreateDashboard />}
+              {selectedOption === 'Home' && <Home sidebarSearchRef={sidebarSearchRef} setSearchText={handleSetSearchText} />}
+            </>
+          )}
+		</Box>
+
       </Box>
     </ThemeProvider>
   );

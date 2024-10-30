@@ -22,7 +22,8 @@ const Platforms: React.FC = () => {
   }, []);
 
   return (
-    <Box sx={{ width: '100%', height: '100vh', padding: '0px', display: 'flex', flexDirection: 'column' }}>
+    <Box sx={{ width: '100%', 
+		height: 'calc(100vh - 64px)', padding: '0px', display: 'flex', flexDirection: 'column' }}>
    
       <Box ref={topBarRef}>
         <PlatformTopbar  />

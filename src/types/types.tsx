@@ -10,16 +10,20 @@ import {
   import SailingIcon from '@mui/icons-material/Sailing';
   import TimelineIcon from '@mui/icons-material/Timeline';
   import ContactMailIcon from '@mui/icons-material/ContactMail';
-  import LoginIcon from '@mui/icons-material/Login';
-  import AddIcon from '@mui/icons-material/Add';
+  import DashboardIcon from '@mui/icons-material/Dashboard';
+  import SpaceDashboardIcon from '@mui/icons-material/SpaceDashboard';
+  import DashboardCustomizeIcon from '@mui/icons-material/DashboardCustomize';
   import AutoGraphIcon from '@mui/icons-material/AutoGraph';
   import ImportExportIcon from '@mui/icons-material/ImportExport';
-  import SearchIcon from '@mui/icons-material/Search';
+  import NotificationsIcon from '@mui/icons-material/Notifications';
   
   export type SidebarOption = 
     | 'Home'
-    | 'Log In'
-    | 'Operational GOOS'
+    | 'Notifications'
+    | 'Indicators'
+    | 'Static Maps'
+    | 'GOOS'
+    | 'Argo'
     | 'Summary'
     | 'Implementation'
     | 'Instrumentation'
@@ -28,17 +32,13 @@ import {
     | 'Ships'
     | 'Lines'
     | 'Contacts'
-    | 'Login'
     | 'Cruise Planning'
-    | 'Create Dashboard'
-    | 'Monthly Analysis'
-    | 'Create Report'
-    | 'Search';
+    | 'Create Dashboard';
   
   export const iconMapping: Record<SidebarOption, JSX.Element> = {
     "Home": <HomeIcon />,
-    "Log In": <LoginIcon />,
-    "Operational GOOS": <MapIcon />,
+    "Notifications": <NotificationsIcon />,
+    "GOOS": <SpaceDashboardIcon />,
     "Summary": <AssessmentIcon />,
     "Implementation": <BuildIcon />,
     "Instrumentation": <SettingsInputComponentIcon />,
@@ -47,11 +47,10 @@ import {
     "Ships": <SailingIcon />,
     "Lines": <TimelineIcon />,
     "Contacts": <ContactMailIcon />,
-    "Login": <LoginIcon />,
+    "Indicators": <AutoGraphIcon />,
     "Cruise Planning": <ImportExportIcon />,
-    "Create Dashboard": <AddIcon />,
-    "Monthly Analysis": <AutoGraphIcon />,
-    "Create Report": <AddIcon />,
-    "Search": <SearchIcon />,
+    "Create Dashboard": <DashboardCustomizeIcon />,
+    "Argo": <DashboardIcon />,
+    "Static Maps": <MapIcon />,
   };
   

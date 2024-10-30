@@ -15,7 +15,7 @@ const CatalogueTable: React.FC<CatalogueTableProps> = ({ entity, apiUrl, columns
   const theme = useTheme();
   const [data, setData] = useState<any[]>([]);
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(50);
+  const [rowsPerPage, setRowsPerPage] = useState(25);
   const [selected, setSelected] = useState<string[]>([]);
   const [columnDialogOpen, setColumnDialogOpen] = useState(false);
 
@@ -61,7 +61,7 @@ const CatalogueTable: React.FC<CatalogueTableProps> = ({ entity, apiUrl, columns
   };
 
   return (
-    <Box sx={{ height: 'calc(100vh - 72px)', overflow: 'hidden', padding: '10px 24px 24px 24px',
+    <Box sx={{ height: '100%', overflow: 'hidden', padding: '10px 24px 24px 24px',
       backgroundColor: theme.palette.mode === 'light' ? '#f5f5f5' : '#1c1c1e', }}>
       <Paper sx={{ display: 'flex', flexDirection: 'column', height: '100%', width: '100%' }}>
 

@@ -40,7 +40,7 @@ const Home: React.FC<HomeProps> = ({ sidebarSearchRef, setSearchText }) => {
   };
 
   const buttonExamples = [
-    { label: 'USA', color: '#777777' },
+    { label: 'France', color: '#777777' },
     { label: 'Maria', color: '#777777' },
     { label: 'Argo', color: '#777777' },
     { label: '290177', color: '#777777' }
@@ -70,7 +70,7 @@ const Home: React.FC<HomeProps> = ({ sidebarSearchRef, setSearchText }) => {
 
   return (
     <Box sx={{
-      height: '100vh',
+      height: 'calc(100vh - 64px)',
       display: 'flex',
       flexDirection: 'column',
       justifyContent: 'center',

@@ -18,14 +18,14 @@ const SidebarList: React.FC<SidebarListProps> = ({ category, options, selectedOp
           variant="subtitle2"
           sx={{
             fontSize: '0.8rem',
-            marginBottom: '4px',
+            marginBottom: '0px',
             paddingLeft: '17px',
             paddingTop: '14px',
-            height: '42px',
+            height: '38px',
             color: darkMode ? "#03a9f4" : "#009af4",
           }}
         >
-          {open ? category : '  '}
+          {open ? category : ''}
         </Typography>
       )}
 
@@ -34,7 +34,7 @@ const SidebarList: React.FC<SidebarListProps> = ({ category, options, selectedOp
           <ListItem
             key={option}
             sx={{
-              height: '42px',
+              height: '40px',
               cursor: 'pointer',
               color: selectedOption === option ? (darkMode ? "#03a9f4" : "#009af4") : 'inherit',
               backgroundColor: selectedOption === option ? (darkMode ? '#333' : '#f0f0f0') : 'inherit',

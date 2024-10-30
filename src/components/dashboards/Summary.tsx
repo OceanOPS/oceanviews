@@ -21,7 +21,8 @@ const Summary: React.FC = () => {
   const layouts = { lg: layout }; 
 
   return (
-    <Box sx={{ width: '100%', height: '100vh', padding: '0px', display: 'flex', flexDirection: 'column' }}>
+    <Box sx={{ width: '100%', 
+		height: '100%', padding: '0px', display: 'flex', flexDirection: 'column' }}>
       <Box ref={topBarRef}>
         <PlatformTopbar />
       </Box>
