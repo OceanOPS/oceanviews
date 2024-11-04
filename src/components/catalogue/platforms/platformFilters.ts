@@ -1,4 +1,5 @@
 export const PlatformCategories = ['General', 'Deployment', 'Ship', 'Identifiers', 'Hardware', 'Sensors'];
+import config from '../../../config';
 
 export const PlatformFilters = [
 	{
@@ -27,7 +28,7 @@ export const PlatformFilters = [
 	  label: 'Network',
 	  type: 'networkSelect',
 	  category: 'General',
-	  url: 'https://www.ocean-ops.org/board/wa/NetworkList?scope=theme&themeId=1000641',
+	  url: `${config.oldDashboardApiRoot}/NetworkList?scope=theme&themeId=1000641`,
 	  defaultDisplayed: true,
 	},
 	{
@@ -35,7 +36,7 @@ export const PlatformFilters = [
 	  label: 'Country',
 	  type: 'countrySelect',
 	  category: 'General',
-	  url: 'https://www.ocean-ops.org/api/data/country?exp=["active = 1"]', 
+	  url: `${config.apiRoot}/data/country?exp=["active = 1"]`, 
 	  defaultDisplayed: true,
 	},
 	{
@@ -43,7 +44,7 @@ export const PlatformFilters = [
 	  label: 'Variable',
 	  type: 'multiSelect',
 	  category: 'General',
-	  url: 'https://www.ocean-ops.org/api/data/variable',
+	  url: `${config.apiRoot}/data/variable`,
 	  defaultDisplayed: true,
 	},
 	{
@@ -51,10 +52,9 @@ export const PlatformFilters = [
 	  label: 'Status',
 	  type: 'multiSelect',
 	  category: 'General',
-	  url: 'https://www.ocean-ops.org/api/data/platformstatus', 
+	  url: `${config.apiRoot}/data/platformstatus`, 
 	  defaultDisplayed: true,
 	  sortBy:'rank'
 	},
 	// Add more filters here...
   ];
-  

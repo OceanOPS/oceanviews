@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Typography, Box, Grid } from '@mui/material';
+import config from '../config';
 
 interface SearchPageProps {
   searchText: string;
@@ -65,7 +66,7 @@ const SearchPage: React.FC<SearchPageProps> = ({ searchText }) => {
     setError(null);
     setLoading(true);
 
-    fetch(`https://www.ocean-ops.org/board/wa/SearchSiteList?searchSite=${encodeURIComponent(searchText)}`)
+    fetch(`${config.oldDashboardApiRoot}/SearchSiteList?searchSite=${encodeURIComponent(searchText)}`)
       .then(response => {
         if (!response.ok) {
           throw new Error("Failed to fetch results");
