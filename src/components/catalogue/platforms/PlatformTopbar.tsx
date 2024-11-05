@@ -1,10 +1,14 @@
 import React, { useState } from 'react';
 import TopbarLayout from '../../../shared/TopbarLayout';
 import { PlatformFilters, PlatformCategories } from './platformFilters';
-import FilterDialog from '../../../shared/FilterDialog'; 
+import FilterDialog from '../../../shared/FilterDialog';
 
-const PlatformTopbar: React.FC = () => {
+interface PlatformTopbarProps {
+  filters: { [key: string]: any };
+  onFilterChange: (filterKey: string, newValue: any) => void;
+}
 
+const PlatformTopbar: React.FC<PlatformTopbarProps> = ({ filters, onFilterChange }) => {
   const [filtersVisibility, setFiltersVisibility] = useState(() =>
     PlatformFilters.reduce((acc, filter) => {
       acc[filter.key] = filter.defaultDisplayed;
@@ -13,22 +17,22 @@ const PlatformTopbar: React.FC = () => {
   );
 
   const toggleFilterVisibility = (filterKey: string) => {
-    setFiltersVisibility((prev) => ({
-      ...prev,
-      [filterKey]: !prev[filterKey],
-    }));
+    setFiltersVisibility((prev) => {
+      const newVisibility = { ...prev, [filterKey]: !prev[filterKey] };
+
+      // Clear the filter value when it is being hidden
+      if (!newVisibility[filterKey]) {
+        clearFilterValue(filterKey);
+      }
+
+      return newVisibility;
+    });
   };
 
-  const [filters, setFilters] = useState<{ [key: string]: any }>({
-    network: [],
-    country: [],
-  });
-
-  const handleFilterChange = (filterKey: string, newValue: any) => {
-    setFilters((prev) => ({
-      ...prev,
-      [filterKey]: newValue,
-    }));
+  const clearFilterValue = (filterKey: string) => {
+    if (filters[filterKey]) {
+      onFilterChange(filterKey, null); // Clear the filter value by setting it to null or an empty value
+    }
   };
 
   const [modalOpen, setModalOpen] = useState(false);
@@ -43,7 +47,7 @@ const PlatformTopbar: React.FC = () => {
         onOpenModal={openModal}
         displayedFilters={displayedFilters}
         filters={filters}
-        handleFilterChange={handleFilterChange}
+        handleFilterChange={onFilterChange}
       />
       <FilterDialog
         open={modalOpen}

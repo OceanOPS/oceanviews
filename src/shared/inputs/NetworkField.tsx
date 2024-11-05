@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Autocomplete, TextField } from '@mui/material';
 import { styled } from '@mui/system';
 
@@ -23,62 +23,59 @@ interface NetworkFieldProps {
 
 const NetworkField: React.FC<NetworkFieldProps> = ({ label, url, value, onChange }) => {
   const [options, setOptions] = useState<NetworkOption[]>([]);
+  const [isFetched, setIsFetched] = useState<boolean>(false); // Track if options have been fetched
 
   const fetchOptions = async () => {
-    if (url) {
+    if (url && !isFetched) {
       try {
         const response = await fetch(url);
         const data = await response.json();
-        const fetchedOptions = Array.isArray(data) 
-		? data.map((item: any) => ({
-			label: item.name,
-			value: item.id,
-			rank: item.rank,
-			masterprog: item.masterprog,
-			}))
-		: [];
+        const fetchedOptions = Array.isArray(data)
+          ? data.map((item: any) => ({
+              label: item.name,
+              value: item.id,
+              rank: item.rank,
+              masterprog: item.masterprog,
+            }))
+          : [];
 
-        
         const sortNetworks = (a: NetworkOption, b: NetworkOption) => {
-            const aMasterprog = a.masterprog ?? '';  
-            const bMasterprog = b.masterprog ?? '';
-            const aRank = a.rank ?? 0; 
-            const bRank = b.rank ?? 0;
-            const aName = a.label ?? ''; 
-            const bName = b.label ?? '';
-        
-            if (aName === "OceanOPS") return -1;
-            if (bName === "OceanOPS") return 1;
-            if (aMasterprog === "OceanOPS") return -1;
-            if (bMasterprog === "OceanOPS") return 1;
-            if (aMasterprog === "zzz") return -1;
-            if (bMasterprog === "zzz") return 1;
-            if (aMasterprog > bMasterprog) return 1;
-            if (aMasterprog < bMasterprog) return -1;
-            if (aRank > bRank) return 1;
-            if (aRank < bRank) return -1;
-            if (aName > bName) return 1;
-            if (aName < bName) return -1;
-            return 0;
-          };
-          const sortedNetworks = fetchedOptions.sort(sortNetworks);
+          const aMasterprog = a.masterprog ?? '';
+          const bMasterprog = b.masterprog ?? '';
+          const aRank = a.rank ?? 0;
+          const bRank = b.rank ?? 0;
+          const aName = a.label ?? '';
+          const bName = b.label ?? '';
+
+          if (aName === "OceanOPS") return -1;
+          if (bName === "OceanOPS") return 1;
+          if (aMasterprog === "OceanOPS") return -1;
+          if (bMasterprog === "OceanOPS") return 1;
+          if (aMasterprog === "zzz") return -1;
+          if (bMasterprog === "zzz") return 1;
+          if (aMasterprog > bMasterprog) return 1;
+          if (aMasterprog < bMasterprog) return -1;
+          if (aRank > bRank) return 1;
+          if (aRank < bRank) return -1;
+          if (aName > bName) return 1;
+          if (aName < bName) return -1;
+          return 0;
+        };
+
+        const sortedNetworks = fetchedOptions.sort(sortNetworks);
         setOptions(sortedNetworks);
+        setIsFetched(true); // Mark as fetched
       } catch (error) {
-        console.error(`Error fetching country options for ${label}:`, error);
+        console.error(`Error fetching network options for ${label}:`, error);
       }
     }
   };
 
-
-  useEffect(() => {
-    fetchOptions();
-  }, [url]);
-
   return (
     <Autocomplete
-    multiple
+      multiple
       options={options}
-	  size="small"
+      size="small"
       sx={{
         minWidth: '260px',
         '& .MuiOutlinedInput-root': {
@@ -91,6 +88,7 @@ const NetworkField: React.FC<NetworkFieldProps> = ({ label, url, value, onChange
         },
       }}
       value={value}
+      onFocus={fetchOptions} // Fetch options when the input field gains focus
       onChange={(_event, newValue) => onChange(newValue as NetworkOption[])}
       getOptionLabel={(option: NetworkOption) => option.label}
       renderInput={(params) => (

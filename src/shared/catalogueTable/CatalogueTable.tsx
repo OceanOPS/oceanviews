@@ -19,27 +19,27 @@ interface CatalogueTableProps {
   entity: string;
   apiUrl: string;
   columns: Column[];
+  filters: { [key: string]: any }; 
 }
 
 const getNestedValue = (obj: any, path: string, aggProp?: string): any => {
   const value = path.split('.').reduce((acc, part) => acc && acc[part], obj);
-  
   if (Array.isArray(value) && aggProp) {
     return value.map((item) => item[aggProp]).join(', ');
   }
   return value;
 };
 
-const CatalogueTable: React.FC<CatalogueTableProps> = ({ entity, apiUrl, columns }) => {
+const CatalogueTable: React.FC<CatalogueTableProps> = ({ entity, apiUrl, columns, filters }) => {
   const theme = useTheme();
   const [data, setData] = useState<any[]>([]);
   const [total, setTotal] = useState(0);
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(50);
+  const [rowsPerPage, setRowsPerPage] = useState(30);
   const [selected, setSelected] = useState<string[]>([]);
   const [columnDialogOpen, setColumnDialogOpen] = useState(false);
-  const [sortOptions, setSortOptions] = useState<string>(''); 
-  const [loading, setLoading] = useState(true); // New state for loading
+  const [sortOptions, setSortOptions] = useState<string>('');
+  const [loading, setLoading] = useState(true);
 
   const [displayedColumns, setDisplayedColumns] = useState<string[]>(
     columns.filter(col => col.default).map(col => col.key)
@@ -52,22 +52,66 @@ const CatalogueTable: React.FC<CatalogueTableProps> = ({ entity, apiUrl, columns
       .join(',');
   }, [displayedColumns, columns]);
 
+  const filterString = useMemo(() => {
+	const filterObject: { [key: string]: any } = {};
+  
+	Object.entries(filters).forEach(([key, value]) => {
+		if (value != null && (Array.isArray(value) ? value.length > 0 : true)) {
+			if (Array.isArray(value)) {
+			  if (typeof value[0] === 'object' && 'value' in value[0]) {
+				filterObject[key] = value.map((item: any) => item.value).join(',');
+			  } else {
+				filterObject[key] = value.join(',');
+			  }
+			} else if (typeof value === 'object' && 'value' in value && value.value != null) {
+			  filterObject[key] = value.value;
+			} else {
+			  filterObject[key] = value;
+			}
+		}
+	});
+  
+	return encodeURIComponent(JSON.stringify(filterObject));
+  }, [filters]);
+  
+
   useEffect(() => {
-    setLoading(true); // Start loading
-    fetch(`${apiUrl}?page=${page + 1}&pageSize=${rowsPerPage}&fields=${fields}&sort=${sortOptions}`)
-      .then((response) => response.json())
-      .then((r) => {
-        console.log("Fetched data:", r);
-        setData(r.data || []);
-        setTotal(r.total || 0);
-      })
-      .catch((error) => {
-        console.error('Error fetching data:', error);
-      })
-      .finally(() => {
-        setLoading(false); // End loading
-      });
-  }, [apiUrl, page, rowsPerPage, fields, sortOptions]);
+	let isLatestRequest = true; 
+	const controller = new AbortController();
+	const signal = controller.signal;
+  
+	const fetchData = async () => {
+	  setLoading(true);
+	  try {
+		const response = await fetch(`${apiUrl}?page=${page + 1}&pageSize=${rowsPerPage}&fields=${fields}&sort=${sortOptions}&filters=${filterString}`, { signal });
+		const result = await response.json();
+  
+		if (isLatestRequest) { 
+		  setData(result.data || []);
+		  setTotal(result.total || 0);
+		}
+	  } catch (error) {
+		if (error instanceof Error) {
+		  console.error('Error fetching data:', error.message);
+		} else {
+		  console.error('An unknown error occurred:', error);
+		}
+	  } finally {
+		if (isLatestRequest) { 
+		  setLoading(false);
+		}
+	  }
+	};
+  
+	fetchData();
+  
+	return () => {
+	  isLatestRequest = false; 
+	  controller.abort();
+	};
+  }, [apiUrl, page, rowsPerPage, fields, sortOptions, filterString]);
+  
+  
 
   const handleChangePage = (_event: unknown, newPage: number) => {
     setPage(newPage);

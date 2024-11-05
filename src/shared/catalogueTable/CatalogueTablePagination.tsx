@@ -21,7 +21,7 @@ const CatalogueTablePagination: React.FC<CatalogueTablePaginationProps> = ({
         onPageChange={onPageChange}
         rowsPerPage={rowsPerPage}
         onRowsPerPageChange={onRowsPerPageChange}
-        rowsPerPageOptions={[25, 50, { value: -1, label: 'All' }]}
+        rowsPerPageOptions={[30, 50, { value: -1, label: 'All' }]}
       />
     </Box>
   );

@@ -2,7 +2,8 @@ import React from 'react';
 import { AppBar, Box, Toolbar, Button, useTheme } from '@mui/material';
 import CustomTextField from './inputs/TextField';
 import CustomDatePicker from './inputs/CustomDatePicker';
-import AutocompleteField from './inputs/AutocompleteField';
+import MultiAutoField from './inputs/MultiAutoField';
+import SingleAutoField from './inputs/SingleAutoField';
 import CountryField from './inputs/CountryField';
 import NetworkField from './inputs/NetworkField';
 
@@ -29,6 +30,8 @@ const TopbarLayout: React.FC<TopbarLayoutProps> = ({
 }) => {
   const theme = useTheme();
 
+  
+
   return (
     <AppBar
       position="static"
@@ -53,13 +56,20 @@ const TopbarLayout: React.FC<TopbarLayoutProps> = ({
       >
         <Box sx={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: 2, flexGrow: 1 }}>
           {displayedFilters.map((filter) => {
+			const validSortBy = filter.sortBy === 'rank' || filter.sortBy === 'label' ? filter.sortBy : undefined;
             switch (filter.type) {
               case 'text':
                 return (
-                  <CustomTextField
-                    key={filter.key}
-                    label={filter.label}
-                  />
+				  <CustomTextField
+					key={filter.key}
+					label={filter.label}
+					onBlur={(event) => handleFilterChange(filter.key, (event.target as HTMLInputElement).value)}
+					onKeyDown={(event) => {
+					  if (event.key === 'Enter') {
+						handleFilterChange(filter.key, (event.target as HTMLInputElement).value);
+					  }
+					}}
+				  />
                 );
               case 'date':
                 return (
@@ -67,13 +77,12 @@ const TopbarLayout: React.FC<TopbarLayoutProps> = ({
                     key={filter.key}
                     label={filter.label}
                     value={null}
-                    onChange={() => {}}
+                    onChange={(newValue) => handleFilterChange(filter.key, new Date(newValue).toISOString().split('T')[0])}
                   />
                 );
               case 'multiSelect':
-                const validSortBy = filter.sortBy === 'rank' || filter.sortBy === 'label' ? filter.sortBy : undefined;
                 return (
-                  <AutocompleteField
+                  <MultiAutoField
                     key={filter.key}
                     label={filter.label}
                     url={filter.url}
@@ -82,6 +91,17 @@ const TopbarLayout: React.FC<TopbarLayoutProps> = ({
                     sortBy={validSortBy || 'label'}
                   />
                 );
+				case 'singleSelect':
+				  return (
+					<SingleAutoField
+					  key={filter.key}
+					  label={filter.label}
+					  url={filter.url}
+					  value={filters[filter.key] || null}
+					  onChange={(newValue) => handleFilterChange(filter.key, newValue)}
+					  sortBy={validSortBy || 'label'}
+					/>
+				  );
               case 'countrySelect':
                 return (
                   <CountryField

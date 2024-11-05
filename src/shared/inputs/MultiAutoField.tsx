@@ -15,7 +15,7 @@ interface AutocompleteFieldProps {
   sortBy?: 'label' | 'rank';
 }
 
-const AutocompleteField: React.FC<AutocompleteFieldProps> = ({ label, url, value, onChange, sortBy = 'label' }) => {
+const MultiAutoField: React.FC<AutocompleteFieldProps> = ({ label, url, value, onChange, sortBy = 'label' }) => {
   const [options, setOptions] = useState<FilterOption[]>([]);
 
   const fetchOptions = async () => {
@@ -78,4 +78,4 @@ const AutocompleteField: React.FC<AutocompleteFieldProps> = ({ label, url, value
   );
 };
 
-export default AutocompleteField;
+export default MultiAutoField;

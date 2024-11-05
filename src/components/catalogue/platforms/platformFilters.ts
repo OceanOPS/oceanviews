@@ -1,30 +1,44 @@
-export const PlatformCategories = ['General', 'Deployment', 'Ship', 'Identifiers', 'Hardware', 'Sensors'];
+export const PlatformCategories = ['General', 'Deployment', 'Identifiers', 'Telecom', 'Hardware'];
 import config from '../../../config';
 
 export const PlatformFilters = [
 	{
-	  key: 'reference',
-	  label: 'Reference',
+	  key: 'ref',
+	  label: 'Reference (Start)',
 	  type: 'text',
 	  category: 'General',
 	  defaultDisplayed: true,
 	},
 	{
-	  key: 'deployedAfter',
+		key: 'exactRef',
+		label: 'Exact Reference',
+		type: 'text',
+		category: 'General',
+		defaultDisplayed: false,
+	  },
+	  {
+		  key: 'name',
+		  label: 'Name',
+		  type: 'text',
+		  category: 'General',
+		  defaultDisplayed: false,
+		},
+	{
+	  key: 'deplDateFrom',
 	  label: 'Deployed After',
 	  type: 'date',
 	  category: 'Deployment',
 	  defaultDisplayed: true,
 	},
 	{
-	  key: 'deployedBefore',
+	  key: 'deplDateTo',
 	  label: 'Deployed Before',
 	  type: 'date',
 	  category: 'Deployment',
 	  defaultDisplayed: false,
 	},
 	{
-	  key: 'network',
+	  key: 'networks',
 	  label: 'Network',
 	  type: 'networkSelect',
 	  category: 'General',
@@ -40,7 +54,15 @@ export const PlatformFilters = [
 	  defaultDisplayed: true,
 	},
 	{
-	  key: 'variable',
+	  key: 'programs',
+	  label: 'Program',
+	  type: 'multiSelect',
+	  category: 'General',
+	  url: `${config.apiRoot}/data/program`, 
+	  defaultDisplayed: false,
+	},
+	{
+	  key: 'variables',
 	  label: 'Variable',
 	  type: 'multiSelect',
 	  category: 'General',
@@ -56,5 +78,70 @@ export const PlatformFilters = [
 	  defaultDisplayed: true,
 	  sortBy:'rank'
 	},
-	// Add more filters here...
+	{
+		key: 'serialId',
+		label: 'Serial number',
+		type: 'text',
+		category: 'Identifiers',
+		defaultDisplayed: false,
+	},
+	{
+		key: 'wmoId',
+		label: 'GTS-ID',
+		type: 'text',
+		category: 'Identifiers',
+		defaultDisplayed: false,
+	},
+	{
+		key: 'internalId',
+		label: 'Internal ID',
+		type: 'text',
+		category: 'Identifiers',
+		defaultDisplayed: false,
+	},
+	{
+		key: 'wigosId',
+		label: 'WIGOS ID',
+		type: 'text',
+		category: 'Identifiers',
+		defaultDisplayed: false,
+	},
+	{
+	  key: 'telType',
+	  label: 'Telecom type',
+	  type: 'multiSelect',
+	  category: 'Telecom',
+	  url: `${config.apiRoot}/data/telecomtype`, 
+	  defaultDisplayed: false
+	},
+	{
+	  key: 'telServices',
+	  label: 'Telecom service',
+	  type: 'multiSelect',
+	  category: 'Telecom',
+	  url: `${config.apiRoot}/data/telecomservice`, 
+	  defaultDisplayed: false
+	},
+	{
+		key: 'telNum',
+		label: 'Telecom number',
+		type: 'text',
+		category: 'Telecom',
+		defaultDisplayed: false,
+	},
+	{
+		key: 'imei',
+		label: 'IMEI',
+		type: 'text',
+		category: 'Telecom',
+		defaultDisplayed: false,
+	},
+	{
+	  key: 'battery',
+	  label: 'Battery',
+	  type: 'singleSelect',
+	  category: 'Hardware',
+	  url: `${config.apiRoot}/data/platformbattery`, 
+	  defaultDisplayed: false
+	},
   ];

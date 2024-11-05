@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Autocomplete, TextField, Chip, Box } from '@mui/material';
 import { styled } from '@mui/system';
 
@@ -22,16 +22,17 @@ const OptionBox = styled(Box)({
 
 const CountryField: React.FC<CountryFieldProps> = ({ label, url, value, onChange }) => {
   const [options, setOptions] = useState<CountryOption[]>([]);
+  const [isFetched, setIsFetched] = useState<boolean>(false); // State to track if options have been fetched
 
   const fetchOptions = async () => {
-    if (url) {
+    if (url && !isFetched) {
       try {
         const response = await fetch(url);
         const data = await response.json();
         const fetchedOptions = data.data.map((item: any) => ({
           label: item.name,
           value: item.id,
-          code2: item.code2, 
+          code2: item.code2,
         }));
 
         const sortedOptions = fetchedOptions.sort((a: CountryOption, b: CountryOption) =>
@@ -39,20 +40,17 @@ const CountryField: React.FC<CountryFieldProps> = ({ label, url, value, onChange
         );
 
         setOptions(sortedOptions);
+        setIsFetched(true); // Mark as fetched
       } catch (error) {
         console.error(`Error fetching country options for ${label}:`, error);
       }
     }
   };
 
-  useEffect(() => {
-    fetchOptions();
-  }, [url]);
-
   return (
     <Autocomplete
       multiple
-	  size="small"
+      size="small"
       sx={{
         minWidth: '240px',
         '& .MuiOutlinedInput-root': {
@@ -66,6 +64,7 @@ const CountryField: React.FC<CountryFieldProps> = ({ label, url, value, onChange
       }}
       options={options}
       value={value}
+      onFocus={fetchOptions} // Fetch options when the input field gains focus
       getOptionLabel={(option) => option.label}
       onChange={(_event, newValue) => onChange(newValue as CountryOption[])}
       renderTags={(value: CountryOption[], getTagProps) =>
@@ -86,7 +85,6 @@ const CountryField: React.FC<CountryFieldProps> = ({ label, url, value, onChange
           />
         ))
       }
-      
       renderOption={(props, option) => (
         <li {...props}>
           <OptionBox>
@@ -102,8 +100,6 @@ const CountryField: React.FC<CountryFieldProps> = ({ label, url, value, onChange
           </OptionBox>
         </li>
       )}
-      
-      
       renderInput={(params) => (
         <TextField {...params} variant="outlined" label={label} />
       )}

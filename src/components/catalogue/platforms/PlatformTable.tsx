@@ -11,12 +11,12 @@ const platformColumns = [
   { label: 'Site', key: 'site', aggStringProp: 'name', default: false, group: 'Affiliations', field: 'site' },
   { label: 'Area of operation', key: 'area', aggStringProp: 'name', default: false, group: 'Affiliations', field: 'area' },
   { label: 'Observing networks', key: 'observing_networks', aggStringProp: 'name', default: true, group: 'Affiliations', field: 'observingNetworks' },
-  { label: 'Networks', key: 'networks', aggStringProp: 'name', default: true, group: 'Affiliations', field: 'networks' },
+  { label: 'Networks', key: 'networks', aggStringProp: 'name', default: false, group: 'Affiliations', field: 'networks' },
   { label: 'Program', key: 'program.name', default: true, group: 'Affiliations', field: 'programName' },
   { label: 'Country', key: 'program.country.name', default: true, group: 'Affiliations', field: 'country' },
   { label: 'Model', key: 'model.name', default: true, group: 'General', field: 'model' },
   { label: 'Type', key: 'model.type.name', default: false, group: 'General', field: 'type' },
-  { label: 'Family', key: 'model.type.family.name', default: true, group: 'General', field: 'family' },
+  { label: 'Family', key: 'model.type.family.name', default: false, group: 'General', field: 'family' },
   { label: 'Manufacturer', key: 'model.manufacturer.name', default: false, group: 'General', field: 'manufacturer', noSorting: true },
   { label: 'Deployment Date', key: 'deployment.date', default: true, group: 'Deployment', field: 'deplDate' },
   { label: 'Deployment Method', key: 'deployment.method.name', default: false, group: 'Deployment', field: 'deplType' },
@@ -71,15 +71,19 @@ const platformColumns = [
   { label: 'Blacklisted', key: 'is_blacklisted', default: false, group: 'Other', field: 'blacklisted' },
   { label: 'Data status', key: 'data_status.name', default: false, group: 'Other', field: 'dataStatus' },
   { label: 'Data path', key: 'platform_data_links.data_url', default: false, group: 'Other', field: 'dataPath' },
-
 ];
 
-const PlatformTable: React.FC = () => {
+interface PlatformTableProps {
+	filters: { [key: string]: any };
+  }
+
+const PlatformTable: React.FC<PlatformTableProps> = ({ filters }) => {
   return (
     <CatalogueTable
       entity="Platform"
       apiUrl={`${config.apiRoot}/data/oceanjson/platforms`}
       columns={platformColumns}
+	  filters={filters}
     />
   );
 };
