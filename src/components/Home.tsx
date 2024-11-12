@@ -41,7 +41,7 @@ const Home: React.FC<HomeProps> = ({ sidebarSearchRef, setSearchText }) => {
 
   const buttonExamples = [
     { label: 'France', color: '#777777' },
-    { label: 'Maria', color: '#777777' },
+    { label: 'Mari', color: '#777777' },
     { label: 'Argo', color: '#777777' },
     { label: '290177', color: '#777777' }
   ];
@@ -63,9 +63,9 @@ const Home: React.FC<HomeProps> = ({ sidebarSearchRef, setSearchText }) => {
 
   const coordinationButtonConfigs = [
     { name: "Plan cruises", icon: <span role="img" aria-label="search">🔍</span>, onClick: () => {} },
-    { name: "Quality Control", icon: <span role="img" aria-label="edit">✏️</span>, onClick: () => {} },
-    { name: "Coordinators", icon: <span role="img" aria-label="report">📊</span>, onClick: () => {} },
-    { name: "Outreach", icon: <span role="img" aria-label="report">📊</span>, onClick: () => {} },
+    { name: "Research vessels", icon: <span role="img" aria-label="report">📊</span>, onClick: () => {} },
+    { name: "QC Tools", icon: <span role="img" aria-label="edit">✏️</span>, onClick: () => {} },
+    { name: "Build Mooring Lines", icon: <span role="img" aria-label="report">📊</span>, onClick: () => {} },
   ];
 
   return (
@@ -81,7 +81,14 @@ const Home: React.FC<HomeProps> = ({ sidebarSearchRef, setSearchText }) => {
       maxWidth: '1200px',
       margin: '0 auto'
     }}>
-      <Box sx={{ marginTop: 2, width: '100%', maxWidth: '600px' }}>
+		
+		<Box sx={{ marginTop: 0, width: '100%', maxWidth: '600px' }}>
+	  <Typography variant="h5" sx={{ marginTop: 0, marginBottom: 0, marginRight: 0 }}>
+            OceanUI is a free to use, collaborative project.<br/> <a href="https://github.com/British-Oceanographic-Data-Centre/amrit-repos" target="_blank">Join us on GitHub !</a>
+       </Typography>
+	  </Box>
+
+      <Box sx={{ marginTop: { xs: 0, sm: 1, md: 2, lg: 8, xl: 16 }, width: '100%', maxWidth: '600px' }}>
         <CustomTextField
 				  placeholder="Search the GOOS"
 				  value={currentMessage}
@@ -121,7 +128,7 @@ const Home: React.FC<HomeProps> = ({ sidebarSearchRef, setSearchText }) => {
         </Box>
       </Box>
 
-      <Grid container spacing={3} justifyContent="center" sx={{ marginTop: 18 }}>
+      <Grid container spacing={3} justifyContent="center" sx={{ marginTop: { xs: 0, sm: 0, md: 1, lg: 8, xl: 12 } }}>
         <Grid item xs={12} md={4}>
           <PanelBox title="Monitoring" description="Dashboards and Reports" color="#18ba9b" buttons={monitoringButtonConfigs} />
         </Grid>

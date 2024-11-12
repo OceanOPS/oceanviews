@@ -7,6 +7,18 @@ const InteractiveMap: React.FC = () => {
   const topBarRef = useRef<HTMLDivElement | null>(null); 
   const iframeRef = useRef<HTMLIFrameElement | null>(null); 
 
+  const [filters, setFilters] = useState<{ [key: string]: any }>({
+    network: [],
+    country: [],
+  });
+
+  const handleFilterChange = (filterKey: string, newValue: any) => {
+    setFilters((prevFilters) => ({
+      ...prevFilters,
+      [filterKey]: newValue,
+    }));
+  };
+
   useEffect(() => {
     const handleResize = () => {
       if (topBarRef.current) {
@@ -25,7 +37,7 @@ const InteractiveMap: React.FC = () => {
 		height: '100%', padding: '0px', display: 'flex', flexDirection: 'column' }}>
      
       <Box ref={topBarRef}>
-        <PlatformTopbar />
+        <PlatformTopbar  filters={filters} onFilterChange={handleFilterChange} />
       </Box>
 
       <Box

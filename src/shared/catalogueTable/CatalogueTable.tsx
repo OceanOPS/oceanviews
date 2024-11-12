@@ -10,7 +10,7 @@ interface Column {
   default: boolean;
   width?: number;
   group?: string;
-  field?: string;
+  field: string;
   aggStringProp?: string;
   noSorting?: boolean;
 }
@@ -73,6 +73,20 @@ const CatalogueTable: React.FC<CatalogueTableProps> = ({ entity, apiUrl, columns
   
 	return encodeURIComponent(JSON.stringify(filterObject));
   }, [filters]);
+  
+  const permalinkUrl = useMemo(() => {
+	const url = new URL(apiUrl);
+	const params = new URLSearchParams();
+  
+	// Add fields, filters, and sort parameters
+	if (fields) params.set('fields', fields);
+	if (sortOptions) params.set('sort', sortOptions);
+	if (filterString) params.set('filters', filterString);
+  
+	// Only set search once at the end to avoid double question marks
+	url.search = params.toString();
+	return url.toString();
+  }, [apiUrl, fields, sortOptions, filterString]);
   
 
   useEffect(() => {
@@ -139,18 +153,18 @@ const CatalogueTable: React.FC<CatalogueTableProps> = ({ entity, apiUrl, columns
     );
   };
 
-  const handleSortChange = (key: string, direction: 'asc' | 'desc' | null) => {
+  const handleSortChange = (field: string, direction: 'asc' | 'desc' | null) => {
     setPage(0);
     setSortOptions((prevSort) => {
       const sortArr = prevSort ? prevSort.split(',') : [];
-      const existingIndex = sortArr.findIndex((s) => s.startsWith(`${key}:`));
+      const existingIndex = sortArr.findIndex((s) => s.startsWith(`${field}:`));
 
       if (existingIndex >= 0) {
         sortArr.splice(existingIndex, 1);
       }
 
       if (direction) {
-        sortArr.push(`${key}:${direction}`);
+        sortArr.push(`${field}:${direction}`);
       }
 
       return sortArr.join(',');
@@ -187,7 +201,7 @@ const CatalogueTable: React.FC<CatalogueTableProps> = ({ entity, apiUrl, columns
             onPageChange={handleChangePage}
             onRowsPerPageChange={handleChangeRowsPerPage}
           />
-          <ToolbarActions entity={entity} handleColumnDialogOpen={() => setColumnDialogOpen(true)} />
+          <ToolbarActions entity={entity} handleColumnDialogOpen={() => setColumnDialogOpen(true)} permalinkUrl={permalinkUrl}  />
         </Toolbar>
 
         <TableContainer sx={{ flexGrow: 1, overflowY: 'auto' }}>

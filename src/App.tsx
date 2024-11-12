@@ -30,6 +30,15 @@ function App() {
     palette: {
       mode: darkMode ? 'dark' : 'light',
     },
+	breakpoints: {
+		values: {
+		  xs: 0,
+		  sm: 900,  
+		  md: 1200,
+		  lg: 1500,
+		  xl: 2500,
+		},
+	  },
   });
 
   const toggleDarkMode = () => setDarkMode((prevMode) => !prevMode);

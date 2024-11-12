@@ -3,7 +3,7 @@ import CatalogueTable from '../../../shared/catalogueTable/CatalogueTable';
 import config from '../../../config';
 
 const platformColumns = [
-  { label: 'Row', key: 'row', default: true, group: 'General', width: 45, noSorting: true },
+  { label: 'Row', key: 'row', default: true, group: 'General', width: 45, noSorting: true, field: 'ref' },
   { label: 'Reference', key: 'ref', default: true, group: 'General', field: 'ref' },
   { label: 'Status', key: 'status.name', default: true, group: 'General', field: 'status' },
   { label: 'Class-Category', key: 'class_categories', aggStringProp: 'name', default: false, group: 'Affiliations', field: 'classCategory' },

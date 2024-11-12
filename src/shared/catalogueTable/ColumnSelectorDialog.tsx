@@ -1,13 +1,24 @@
 import React, { useState, useEffect } from 'react';
-import { Dialog, DialogTitle, DialogContent, FormGroup, FormControlLabel, Checkbox, Box, Typography, IconButton } from '@mui/material';
+import {
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  FormGroup,
+  FormControlLabel,
+  Checkbox,
+  Box,
+  Typography,
+  IconButton,
+} from '@mui/material';
 import { ArrowUpward, ArrowDownward } from '@mui/icons-material';
 
 interface Column {
   label: string;
   key: string;
+  field: string; 
   default: boolean;
   group?: string;
-  noSorting?: boolean; // New property to control sorting
+  noSorting?: boolean;
 }
 
 interface ColumnSelectorDialogProps {
@@ -15,7 +26,7 @@ interface ColumnSelectorDialogProps {
   columns: Column[];
   displayedColumns: string[];
   handleColumnToggle: (columnKey: string) => void;
-  onSortChange: (key: string, direction: 'asc' | 'desc' | null) => void;
+  onSortChange: (field: string, direction: 'asc' | 'desc' | null) => void;
   onClose: () => void;
 }
 
@@ -28,7 +39,7 @@ const ColumnSelectorDialog: React.FC<ColumnSelectorDialogProps> = ({
   onClose,
 }) => {
   const [tempDisplayedColumns, setTempDisplayedColumns] = useState<string[]>(displayedColumns);
-  const [tempSortFields, setTempSortFields] = useState<{ [key: string]: { direction: 'asc' | 'desc'; order: number } }>({});
+  const [tempSortFields, setTempSortFields] = useState<{ [field: string]: { direction: 'asc' | 'desc'; order: number } }>({});
 
   useEffect(() => {
     if (open) {
@@ -46,21 +57,24 @@ const ColumnSelectorDialog: React.FC<ColumnSelectorDialogProps> = ({
     return acc;
   }, {} as Record<string, Column[]>);
 
-  const toggleSortDirection = (key: string, direction: 'asc' | 'desc') => {
-    if (!tempDisplayedColumns.includes(key)) {
-      setTempDisplayedColumns((prev) => [...prev, key]);
+  const toggleSortDirection = (field: string, direction: 'asc' | 'desc') => {
+    const column = columns.find((col) => col.field === field);
+    if (!column) return;
+
+    if (!tempDisplayedColumns.includes(column.key)) {
+      setTempDisplayedColumns((prev) => [...prev, column.key]);
     }
 
     setTempSortFields((prev) => {
-      const currentSort = prev[key];
+      const currentSort = prev[field];
 
       if (!currentSort) {
-        return { ...prev, [key]: { direction, order: Object.keys(prev).length + 1 } };
+        return { ...prev, [field]: { direction, order: Object.keys(prev).length + 1 } };
       } else if (currentSort.direction === direction) {
-        const { [key]: _, ...remaining } = prev;
+        const { [field]: _, ...remaining } = prev;
         return remaining;
       } else {
-        return { ...prev, [key]: { ...currentSort, direction } };
+        return { ...prev, [field]: { ...currentSort, direction } };
       }
     });
   };
@@ -70,9 +84,10 @@ const ColumnSelectorDialog: React.FC<ColumnSelectorDialogProps> = ({
       prev.includes(columnKey) ? prev.filter((key) => key !== columnKey) : [...prev, columnKey]
     );
 
-    if (tempSortFields[columnKey]) {
+    const field = columns.find((col) => col.key === columnKey)?.field;
+    if (field && tempSortFields[field]) {
       setTempSortFields((prev) => {
-        const { [columnKey]: _, ...remaining } = prev;
+        const { [field]: _, ...remaining } = prev;
         return remaining;
       });
     }
@@ -91,8 +106,8 @@ const ColumnSelectorDialog: React.FC<ColumnSelectorDialogProps> = ({
       }
     });
 
-    Object.keys(tempSortFields).forEach((key) => {
-      onSortChange(key, tempSortFields[key].direction);
+    Object.keys(tempSortFields).forEach((field) => {
+      onSortChange(field, tempSortFields[field].direction);
     });
 
     onClose();
@@ -100,7 +115,7 @@ const ColumnSelectorDialog: React.FC<ColumnSelectorDialogProps> = ({
 
   const sortedColumns = Object.keys(tempSortFields)
     .sort((a, b) => (tempSortFields[a].order || 0) - (tempSortFields[b].order || 0))
-    .map((key) => ({ key, ...tempSortFields[key] }));
+    .map((field) => ({ field, ...tempSortFields[field] }));
 
   return (
     <Dialog open={open} onClose={applyChanges} maxWidth="lg" fullWidth>
@@ -129,9 +144,9 @@ const ColumnSelectorDialog: React.FC<ColumnSelectorDialogProps> = ({
                       <Box>
                         <IconButton
                           size="small"
-                          onClick={() => toggleSortDirection(column.key, 'asc')}
+                          onClick={() => toggleSortDirection(column.field, 'asc')}
                           sx={{
-                            color: tempSortFields[column.key]?.direction === 'asc' ? 'primary.main' : '#bbb',
+                            color: tempSortFields[column.field]?.direction === 'asc' ? 'primary.main' : '#bbb',
                             fontSize: '0.8rem',
                           }}
                         >
@@ -139,9 +154,9 @@ const ColumnSelectorDialog: React.FC<ColumnSelectorDialogProps> = ({
                         </IconButton>
                         <IconButton
                           size="small"
-                          onClick={() => toggleSortDirection(column.key, 'desc')}
+                          onClick={() => toggleSortDirection(column.field, 'desc')}
                           sx={{
-                            color: tempSortFields[column.key]?.direction === 'desc' ? 'primary.main' : '#bbb',
+                            color: tempSortFields[column.field]?.direction === 'desc' ? 'primary.main' : '#bbb',
                             fontSize: '0.8rem',
                           }}
                         >
@@ -164,9 +179,9 @@ const ColumnSelectorDialog: React.FC<ColumnSelectorDialogProps> = ({
             </Typography>
           ) : (
             sortedColumns.map((sortCol, index) => (
-              <Box key={sortCol.key} sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+              <Box key={sortCol.field} sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                 <Typography>{index + 1}.</Typography>
-                <Typography>{columns.find(col => col.key === sortCol.key)?.label || sortCol.key}</Typography>
+                <Typography>{columns.find(col => col.field === sortCol.field)?.label || sortCol.field}</Typography>
                 <Typography>{sortCol.direction === 'asc' ? 'Ascending' : 'Descending'}</Typography>
               </Box>
             ))

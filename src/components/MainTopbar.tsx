@@ -38,10 +38,10 @@ const MainTopbar: React.FC<MainTopbarProps> = ({ darkMode, toggleDarkMode, sideb
           <IconButton onClick={() => setSidebarOpen(!sidebarOpen)}   sx={{ marginLeft: '0px'}}>
             {sidebarOpen ? <ChevronLeft /> : <MenuIcon />}
           </IconButton>
-          <Typography variant="h4" noWrap sx={{ paddingLeft: '20px', fontFamily: 'Days One, sans-serif !important', fontSize: '32px' }}>
+          <Typography variant="h4" noWrap sx={{ paddingLeft: '20px', fontFamily: 'Days One, sans-serif !important', fontSize: '30px' }}>
             Ocean
             <Typography variant="h5" component="span" sx={{ fontWeight: 600, fontFamily: 'Days One, sans-serif !important', fontSize: '28px' }}>
-              OPS
+              UI
             </Typography>
           </Typography>
         </Box>

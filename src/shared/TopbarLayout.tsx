@@ -1,6 +1,7 @@
 import React from 'react';
 import { AppBar, Box, Toolbar, Button, useTheme } from '@mui/material';
 import CustomTextField from './inputs/TextField';
+import CustomNumberField from './inputs/NumberField';
 import CustomDatePicker from './inputs/CustomDatePicker';
 import MultiAutoField from './inputs/MultiAutoField';
 import SingleAutoField from './inputs/SingleAutoField';
@@ -13,6 +14,8 @@ interface FilterOption {
   type: string;
   sortBy?: string;
   url?: string;
+  min?: number;
+  max?: number;
 }
 
 interface TopbarLayoutProps {
@@ -71,6 +74,21 @@ const TopbarLayout: React.FC<TopbarLayoutProps> = ({
 					}}
 				  />
                 );
+				case 'number':
+				  return (
+					<CustomNumberField
+					  key={filter.key}
+					  label={filter.label}
+					  min={filter.min}
+					  max={filter.max}
+					  onBlur={(event) => handleFilterChange(filter.key, (event.target as HTMLInputElement).value)}
+					  onKeyDown={(event) => {
+						if (event.key === 'Enter') {
+						  handleFilterChange(filter.key, (event.target as HTMLInputElement).value);
+						}
+					  }}
+					/>
+				  );
               case 'date':
                 return (
                   <CustomDatePicker
